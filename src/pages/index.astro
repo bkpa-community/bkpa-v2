@@ -89,6 +89,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     </div>
   </div>
 
+  <!-- ============ FIND HELP ============ -->
+  <section class="bg-(--color-deep) py-14 text-(--color-deep-ink)">
+    <div class="mx-auto flex max-w-6xl flex-col items-start gap-6 px-6 md:flex-row md:items-center md:justify-between md:px-10">
+      <div>
+        <p class="font-mono text-[0.72rem] tracking-wider opacity-75 uppercase"><span class="i18n-bn bn">সহায়তা খুঁজুন</span><span class="i18n-en">Find Help</span></p>
+        <h2 class="mt-1.5 font-display text-[clamp(1.5rem,3vw,2rem)] font-semibold"><span class="i18n-bn bn">আমরা কীভাবে সাহায্য করতে পারি?</span><span class="i18n-en">How can we help?</span></h2>
+        <p class="mt-2 max-w-lg opacity-90"><span class="i18n-bn bn-body">কয়েকটি প্রশ্নের উত্তর দিন — আমরা আপনাকে সঠিক তথ্যের দিকে পথ দেখাবো।</span><span class="i18n-en">Answer a few quick questions and we'll point you to the right resources for you.</span></p>
+      </div>
+      <a class="flex-none rounded-md bg-(--color-deep-ink) px-6 py-3 text-sm font-semibold text-(--color-deep) hover:brightness-95" href={`${base}/find-help`}>
+        <span class="i18n-bn bn">শুরু করুন</span><span class="i18n-en">Get Started</span> →
+      </a>
+    </div>
+  </section>
 
   <!-- ============ KNOW YOUR KIDNEY ============ -->
   <section class="py-14" id="topics">
