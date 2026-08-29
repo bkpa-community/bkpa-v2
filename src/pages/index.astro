@@ -33,7 +33,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
           <span class="i18n-en">"Bridging the knowledge gap to better kidney care."</span>
         </p>
         <div class="mt-7 flex flex-wrap gap-3.5">
-          <a class="inline-flex items-center gap-2 rounded-md bg-(--color-accent) px-5.5 py-3 text-sm font-semibold text-(--color-accent-ink) hover:brightness-110" href={`${base}/emergency-contacts/nephrology-doctors`}>
+          <a class="inline-flex items-center gap-2 rounded-md bg-(--color-deep) px-5.5 py-3 text-sm font-semibold text-(--color-deep-ink) hover:brightness-110" href={`${base}/emergency-contacts/nephrology-doctors`}>
             <span class="i18n-bn bn">জরুরি সহায়তা</span><span class="i18n-en">Emergency Help</span>
           </a>
           <a class="inline-flex items-center gap-2 rounded-md border border-(--color-line) px-5.5 py-3 text-sm font-semibold hover:bg-(--color-surface-2)" href={`${base}/know-your-kidney/kidney-basic`}>
@@ -46,7 +46,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
         <svg viewBox="0 0 400 400" class="h-full w-full">
           <path d="M200 40c-70 0-120 62-120 138 0 96 48 172 120 172s120-76 120-172C320 102 270 40 200 40Z" fill="var(--color-surface-2)"></path>
           <path d="M200 40c-70 0-120 62-120 138 0 96 48 172 120 172" fill="none" stroke="var(--color-deep)" stroke-width="2" opacity=".5"></path>
-          <path d="M162 150c0-30 20-52 44-52s44 26 44 58-18 46-40 46c-14 0-22-8-22-20 0-14 12-20 26-16" fill="none" stroke="var(--color-accent)" stroke-width="6" stroke-linecap="round"></path>
+          <path d="M162 150c0-30 20-52 44-52s44 26 44 58-18 46-40 46c-14 0-22-8-22-20 0-14 12-20 26-16" fill="none" stroke="var(--color-deep)" stroke-width="6" stroke-linecap="round"></path>
           <circle cx="200" cy="150" r="7" fill="var(--color-accent-2)"></circle>
         </svg>
         <div class="absolute bottom-[-1.1rem] left-1/2 flex w-max max-w-[92%] -translate-x-1/2 items-center gap-2.5 rounded-lg border border-(--color-line) bg-(--color-surface) px-4.5 py-3 shadow-xl">
@@ -62,7 +62,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
   <!-- ============ NOTICE BOARD ============ -->
   {home.notice.enable && (
-    <div class="border-y border-(--color-line) bg-(--color-accent) text-(--color-accent-ink)">
+    <div class="border-y border-(--color-line) bg-(--color-deep) text-(--color-deep-ink)">
       <div class="mx-auto max-w-6xl px-6 py-5 md:px-10">
         <p class="font-semibold">{home.notice.title}</p>
         <p class="mt-1.5 max-w-3xl whitespace-pre-line text-sm opacity-90">{home.notice.content}</p>
@@ -133,7 +133,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   </section>
 
   <!-- ============ EMERGENCY ============ -->
-  <section class="bg-(--color-accent) py-14 text-(--color-accent-ink)" id="emergency">
+  <section class="bg-(--color-deep) py-14 text-(--color-deep-ink)" id="emergency">
     <div class="mx-auto max-w-6xl px-6 md:px-10">
       <div class="mb-8 max-w-xl">
         <p class="font-mono text-[0.72rem] tracking-wider opacity-75 uppercase"><span class="i18n-bn bn">তাৎক্ষণিক প্রয়োজনে</span><span class="i18n-en">When you need it now</span></p>
@@ -142,7 +142,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       </div>
       <div class="grid grid-cols-2 gap-3.5 sm:grid-cols-3">
         {EMERGENCY_CATEGORIES.map((c) => (
-          <a class="rounded-lg border border-[color-mix(in_srgb,var(--color-accent-ink)_30%,transparent)] bg-[color-mix(in_srgb,var(--color-accent-ink)_12%,transparent)] p-4.5 hover:bg-[color-mix(in_srgb,var(--color-accent-ink)_20%,transparent)]" href={`${base}/emergency-contacts/${c.slug}`}>
+          <a class="rounded-lg border border-[color-mix(in_srgb,var(--color-deep-ink)_30%,transparent)] bg-[color-mix(in_srgb,var(--color-deep-ink)_12%,transparent)] p-4.5 hover:bg-[color-mix(in_srgb,var(--color-deep-ink)_20%,transparent)]" href={`${base}/emergency-contacts/${c.slug}`}>
             <span class="block text-sm font-semibold"><span class="i18n-bn bn">{c.labelBn}</span><span class="i18n-en">{c.labelEn}</span></span>
           </a>
         ))}

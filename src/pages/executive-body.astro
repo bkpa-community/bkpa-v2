@@ -23,8 +23,8 @@ const members = (await getCollection("team")).sort((a, b) => a.data.order - b.da
             <h2 class="font-display text-[1.02rem] font-semibold">{m.data.name}</h2>
             {m.data.role && <p class="mt-1 text-sm text-(--color-ink-soft)">{m.data.role}</p>}
             <div class="mt-3 flex flex-col gap-1 font-mono text-xs text-(--color-ink-soft) tabular-nums">
-              {m.data.phone && <a class="hover:text-(--color-accent)" href={`tel:${m.data.phone}`}>{m.data.phone}</a>}
-              {m.data.email && <a class="hover:text-(--color-accent)" href={`mailto:${m.data.email}`}>{m.data.email}</a>}
+              {m.data.phone && <a class="hover:text-(--color-deep)" href={`tel:${m.data.phone}`}>{m.data.phone}</a>}
+              {m.data.email && <a class="hover:text-(--color-deep)" href={`mailto:${m.data.email}`}>{m.data.email}</a>}
             </div>
           </div>
         ))}

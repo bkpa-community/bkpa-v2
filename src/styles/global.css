@@ -14,8 +14,6 @@
   --color-surface-2: #e5e9dd;
   --color-deep: #0f6c35;
   --color-deep-ink: #edf7f1;
-  --color-accent: #a6402b;
-  --color-accent-ink: #fbede8;
   --color-accent-2: #c08a2e;
   --color-line: #d7d2bf;
 }
@@ -29,8 +27,6 @@
     --color-surface-2: #20302b;
     --color-deep: #5ce092;
     --color-deep-ink: #0e2517;
-    --color-accent: #e58467;
-    --color-accent-ink: #2b1712;
     --color-accent-2: #e3ae58;
     --color-line: #2c3830;
   }
@@ -43,8 +39,6 @@
   --color-surface-2: #20302b;
   --color-deep: #5ce092;
   --color-deep-ink: #0e2517;
-  --color-accent: #e58467;
-  --color-accent-ink: #2b1712;
   --color-accent-2: #e3ae58;
   --color-line: #2c3830;
 }
@@ -106,7 +100,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-deep);
   outline-offset: 3px;
   border-radius: 3px;
 }
@@ -139,7 +133,7 @@ body {
   margin-block: 0.35em;
 }
 .prose-bkpa a {
-  color: var(--color-accent);
+  color: var(--color-deep);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
