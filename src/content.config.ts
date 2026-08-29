@@ -20,15 +20,31 @@ const articles = defineCollection({
 
 // ---------------------------------------------------------------------------
 // Emergency Contacts — one entry per category (Nephrology Doctors, Hospitals, ...).
-// Content stays as rich freeform text (name / chamber / phone all in one block)
-// exactly as BKPA published it, rather than force-parsed into per-doctor
-// records — automated parsing risked mis-splitting real phone numbers.
+// Categories with real content are broken into structured `items` (each
+// hand-transcribed and checked against the original text so no phone number
+// or name was mis-split); categories still holding placeholder text fall
+// back to freeform markdown `body`.
 // ---------------------------------------------------------------------------
 const emergencyContacts = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/emergency-contacts" }),
   schema: z.object({
     title: z.string(),
     order: z.number().default(0),
+    intro: z.string().optional(),
+    items: z
+      .array(
+        z.object({
+          group: z.string().optional(),
+          name: z.string(),
+          role: z.string().optional(),
+          address: z.string().optional(),
+          phone: z.string().optional(),
+          email: z.string().optional(),
+          website: z.string().optional(),
+          notes: z.string().optional(),
+        }),
+      )
+      .optional(),
   }),
 });
 
