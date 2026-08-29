@@ -30,7 +30,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
           {entry.data.date.toLocaleDateString("en-CA")}
         </time>
       )}
-      {entry.data.image && <img class="mt-6 w-full rounded-lg border border-(--color-line) object-cover" src={encodeURI(entry.data.image)} alt="" loading="eager" />}
+      {entry.data.image && <img class="mt-6 w-full rounded-lg border border-(--color-line) object-cover" src={encodeURI(`${base}${entry.data.image}`)} alt="" loading="eager" />}
       <div class="prose-bkpa mt-8">
         <Content />
       </div>
