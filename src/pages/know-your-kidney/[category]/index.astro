@@ -69,11 +69,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
             <div class="flex flex-1 flex-col p-5">
               <h2 class="font-display text-[1.05rem] font-semibold leading-snug">{a.data.title}</h2>
               <p class="mt-2 line-clamp-3 flex-1 text-sm text-(--color-ink-soft)">{excerpt(a.body ?? "")}</p>
-              {a.data.date && (
-                <time class="mt-3 block font-mono text-xs text-(--color-ink-soft)" datetime={a.data.date.toISOString()}>
-                  {a.data.date.toLocaleDateString("en-CA")}
-                </time>
-              )}
             </div>
           </a>
         ))}
