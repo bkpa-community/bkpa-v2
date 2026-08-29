@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { EMERGENCY_CATEGORIES } from "../../lib/categories";
+
+const all = await getCollection("emergencyContacts");
+const countFor = (slug: string) => all.find((e) => e.id === slug)?.data.items?.length ?? 0;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<BaseLayout title="Emergency Contacts" description="Emergency contact directory — nephrology doctors, vascular surgeons, dialysis centers, and blood banks, BKPA Foundation">
+  <section class="bg-(--color-deep) py-10 text-(--color-deep-ink)">
+    <div class="mx-auto max-w-5xl px-6 md:px-10">
+      <p class="font-mono text-[0.72rem] tracking-wider opacity-75 uppercase"><span class="i18n-bn bn">তাৎক্ষণিক প্রয়োজনে</span><span class="i18n-en">When you need it now</span></p>
+      <h1 class="mt-1.5 font-display text-[clamp(1.7rem,3.6vw,2.4rem)] font-semibold">
+        <span class="i18n-bn bn">জরুরি যোগাযোগ</span><span class="i18n-en">Emergency Contacts</span>
+      </h1>
+      <p class="mt-2 max-w-xl opacity-90"><span class="i18n-bn bn-body">নেফ্রোলজিস্ট থেকে ব্লাড ব্যাংক পর্যন্ত — ক্যাটাগরি অনুযায়ী দ্রুত খুঁজে নিন।</span><span class="i18n-en">From nephrologists to blood banks — find the right contact by category, fast.</span></p>
+    </div>
+  </section>
+
+  <section class="py-14">
+    <div class="mx-auto max-w-5xl px-6 md:px-10">
+      <div class="grid gap-4 sm:grid-cols-2">
+        {EMERGENCY_CATEGORIES.map((c) => (
+          <a class="flex flex-col justify-between gap-4 rounded-lg border border-(--color-line) bg-(--color-surface) p-6 hover:border-(--color-deep)" href={`${base}/emergency-contacts/${c.slug}`}>
+            <div>
+              <h2 class="font-display text-[1.1rem] font-semibold">
+                <span class="i18n-bn bn">{c.labelBn}</span><span class="i18n-en">{c.labelEn}</span>
+              </h2>
+            </div>
+            <span class="font-mono text-xs text-(--color-ink-soft) tabular-nums">
+              {countFor(c.slug)} <span class="i18n-bn bn">টি এন্ট্রি</span><span class="i18n-en">entries</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

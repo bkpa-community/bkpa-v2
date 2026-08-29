@@ -29,9 +29,7 @@ export type EmergencyCategory = {
 
 export const EMERGENCY_CATEGORIES: EmergencyCategory[] = [
   { slug: "nephrology-doctors", labelEn: "Nephrology Doctors", labelBn: "নেফ্রোলজি ডাক্তার" },
-  { slug: "urology-doctors", labelEn: "Urology Doctors", labelBn: "ইউরোলজি ডাক্তার" },
   { slug: "vascular-surgeons", labelEn: "Vascular Surgeons", labelBn: "ভাস্কুলার সার্জন" },
   { slug: "dialysis-centers", labelEn: "Dialysis Centers", labelBn: "ডায়ালাইসিস সেন্টার" },
-  { slug: "hospitals", labelEn: "Hospitals", labelBn: "হাসপাতাল" },
   { slug: "blood-banks", labelEn: "Blood Banks", labelBn: "ব্লাড ব্যাংক" },
 ];
