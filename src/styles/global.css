@@ -107,7 +107,7 @@ body {
 
 /* Prose styling for article/emergency-contact bodies rendered from markdown */
 .prose-bkpa {
-  max-width: 42rem;
+  max-width: none;
   color: var(--color-ink);
   line-height: 1.75;
 }
