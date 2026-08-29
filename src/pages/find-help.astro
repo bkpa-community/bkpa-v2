@@ -3,116 +3,170 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
-const PERSONAS = [
-  { id: "patient", en: "Kidney Patient", bn: "কিডনি রোগী" },
-  { id: "caregiver", en: "Family / Caregiver", bn: "পরিবার / কেয়ারগিভার" },
-  { id: "professional", en: "Healthcare Professional", bn: "স্বাস্থ্যকর্মী" },
-  { id: "learner", en: "Just Learning", bn: "জানতে চাই" },
-] as const;
+const STEPS = [
+  {
+    key: "role",
+    q: { bn: "আপনি কে?", en: "I am a..." },
+    options: [
+      { value: "patient", bn: "আমি কিডনি রোগী", en: "Kidney Patient" },
+      { value: "caregiver", bn: "পরিবারের সদস্য / কেয়ারগিভার", en: "Family / Caregiver" },
+      { value: "at_risk", bn: "ঝুঁকিপূর্ণ (ডায়াবেটিস/BP আছে)", en: "At Risk (Diabetes/BP)" },
+      { value: "general", bn: "সাধারণ জিজ্ঞাসা", en: "Just Learning" },
+    ],
+  },
+  {
+    key: "condition",
+    q: { bn: "বর্তমান কিডনির অবস্থা কী?", en: "What's your current kidney condition?" },
+    options: [
+      { value: "ckd", bn: "CKD (ক্রনিক কিডনি ডিজিজ)", en: "CKD (Chronic Kidney Disease)" },
+      { value: "aki", bn: "AKI (একিউট কিডনি ইনজুরি)", en: "AKI (Acute Kidney Injury)" },
+      { value: "dialysis", bn: "ডায়ালাইসিস চলছে", en: "Currently on Dialysis" },
+      { value: "transplant", bn: "ট্রান্সপ্লান্ট হয়েছে", en: "Had a Transplant" },
+      { value: "unknown", bn: "নির্ণয় হয়নি / জানি না", en: "Not Diagnosed / Don't Know" },
+    ],
+  },
+  {
+    key: "stage",
+    q: { bn: "CKD এর কোন স্টেজে আছেন?", en: "Which CKD stage are you in?" },
+    options: [
+      { value: "1", bn: "স্টেজ ১ (eGFR ≥90)", en: "Stage 1 (eGFR ≥90)" },
+      { value: "2", bn: "স্টেজ ২ (eGFR 60-89)", en: "Stage 2 (eGFR 60-89)" },
+      { value: "3", bn: "স্টেজ ৩ (eGFR 30-59)", en: "Stage 3 (eGFR 30-59)" },
+      { value: "4", bn: "স্টেজ ৪ (eGFR 15-29)", en: "Stage 4 (eGFR 15-29)" },
+      { value: "5", bn: "স্টেজ ৫ (eGFR <15)", en: "Stage 5 (eGFR <15)" },
+      { value: "unknown", bn: "জানি না", en: "Don't Know" },
+    ],
+  },
+  {
+    key: "comorbidities",
+    q: { bn: "অন্য কোন সমস্যা আছে কি?", en: "Any other conditions?" },
+    multi: true,
+    options: [
+      { value: "diabetes", bn: "ডায়াবেটিস", en: "Diabetes" },
+      { value: "hypertension", bn: "উচ্চ রক্তচাপ", en: "Hypertension" },
+      { value: "heart_disease", bn: "হৃদরোগ", en: "Heart Disease" },
+      { value: "none", bn: "কোনোটিই নেই", en: "None of These" },
+    ],
+  },
+];
 
-const TOPICS = [
-  { id: "basics", en: "Kidney Basics & CKD", bn: "কিডনি বেসিক ও CKD" },
-  { id: "dialysis", en: "Dialysis", bn: "ডায়ালাইসিস" },
-  { id: "transplant", en: "Kidney Transplant", bn: "কিডনি প্রতিস্থাপন" },
-  { id: "diet", en: "Diet & Lifestyle", bn: "খাদ্যাভ্যাস ও জীবনযাত্রা" },
-  { id: "contacts", en: "Doctors, Hospitals & Emergency", bn: "ডাক্তার, হাসপাতাল ও জরুরি যোগাযোগ" },
-] as const;
-
-const NEEDS: Record<string, { id: string; en: string; bn: string }[]> = {
-  basics: [
-    { id: "what-is", en: "What is a kidney and how does it work?", bn: "কিডনি কী ও কীভাবে কাজ করে?" },
-    { id: "ckd", en: "Chronic Kidney Disease (CKD)", bn: "ক্রনিক কিডনি ডিজিজ (CKD)" },
-    { id: "aki", en: "Acute Kidney Injury (AKI)", bn: "একিউট কিডনি ইনজুরি (AKI)" },
-  ],
-  dialysis: [
-    { id: "what-is", en: "What is dialysis and why is it needed?", bn: "ডায়ালাইসিস কী ও কেন প্রয়োজন?" },
-    { id: "find-center", en: "Find a dialysis center", bn: "ডায়ালাইসিস সেন্টার খুঁজছি" },
-    { id: "fistula", en: "Fistula / vascular access", bn: "ফিস্টুলা / ভাস্কুলার এক্সেস" },
-  ],
-  transplant: [
-    { id: "process", en: "The transplant process", bn: "প্রতিস্থাপন প্রক্রিয়া" },
-    { id: "post", en: "Life after transplant", bn: "প্রতিস্থাপন পরবর্তী জীবন" },
-    { id: "find-doctor", en: "Find a nephrologist", bn: "নেফ্রোলজিস্ট খুঁজছি" },
-  ],
-  diet: [
-    { id: "renal-diet", en: "Renal diet guidelines", bn: "রেনাল ডায়েট নির্দেশিকা" },
-    { id: "diabetes", en: "Diabetes & kidney health", bn: "ডায়াবেটিস ও কিডনি স্বাস্থ্য" },
-    { id: "general", en: "General kidney health tips", bn: "কিডনি স্বাস্থ্যের সাধারণ টিপস" },
-  ],
-  contacts: [
-    { id: "nephrologist", en: "Nephrologist", bn: "নেফ্রোলজিস্ট" },
-    { id: "vascular", en: "Vascular / fistula surgeon", bn: "ভাস্কুলার / ফিস্টুলা সার্জন" },
-    { id: "dialysis-center", en: "Dialysis center", bn: "ডায়ালাইসিস সেন্টার" },
-    { id: "blood", en: "Blood bank", bn: "ব্লাড ব্যাংক" },
-  ],
-};
-
-type ResultLink = { en: string; bn: string; href: string };
-
-const RESULTS: Record<string, ResultLink[]> = {
-  "basics:what-is": [
-    { en: "Kidney Basics articles", bn: "কিডনি বেসিক আর্টিকেল সমূহ", href: `${base}/know-your-kidney/kidney-basic` },
-    { en: "Chronic Kidney Disease (CKD)", bn: "ক্রনিক কিডনি ডিজিজ (CKD)", href: `${base}/know-your-kidney/ckd` },
-  ],
-  "basics:ckd": [
-    { en: "Chronic Kidney Disease (CKD) articles", bn: "ক্রনিক কিডনি ডিজিজ (CKD) আর্টিকেল সমূহ", href: `${base}/know-your-kidney/ckd` },
-    { en: "Renal Diet guidelines", bn: "রেনাল ডায়েট নির্দেশিকা", href: `${base}/know-your-kidney/renal-diet` },
-    { en: "Find a nephrologist", bn: "নেফ্রোলজিস্ট খুঁজুন", href: `${base}/emergency-contacts/nephrology-doctors` },
-  ],
-  "basics:aki": [
-    { en: "Acute Kidney Injury (AKI) articles", bn: "একিউট কিডনি ইনজুরি (AKI) আর্টিকেল সমূহ", href: `${base}/know-your-kidney/aki` },
-    { en: "Find a nephrologist", bn: "নেফ্রোলজিস্ট খুঁজুন", href: `${base}/emergency-contacts/nephrology-doctors` },
-  ],
-  "dialysis:what-is": [
-    { en: "Dialysis articles", bn: "ডায়ালাইসিস আর্টিকেল সমূহ", href: `${base}/know-your-kidney/dialysis` },
-    { en: "Dialysis Centers directory", bn: "ডায়ালাইসিস সেন্টার তালিকা", href: `${base}/emergency-contacts/dialysis-centers` },
-  ],
-  "dialysis:find-center": [
-    { en: "Dialysis Centers directory", bn: "ডায়ালাইসিস সেন্টার তালিকা", href: `${base}/emergency-contacts/dialysis-centers` },
-    { en: "Dialysis articles", bn: "ডায়ালাইসিস আর্টিকেল সমূহ", href: `${base}/know-your-kidney/dialysis` },
-  ],
-  "dialysis:fistula": [
-    { en: "Vascular / Fistula Surgeons directory", bn: "ভাস্কুলার / ফিস্টুলা সার্জন তালিকা", href: `${base}/emergency-contacts/vascular-surgeons` },
-    { en: "Dialysis articles", bn: "ডায়ালাইসিস আর্টিকেল সমূহ", href: `${base}/know-your-kidney/dialysis` },
-  ],
-  "transplant:process": [
-    { en: "Renal Transplantation articles", bn: "রেনাল ট্রান্সপ্লান্টেশন আর্টিকেল সমূহ", href: `${base}/know-your-kidney/renal-transplantation` },
-    { en: "Find a nephrologist", bn: "নেফ্রোলজিস্ট খুঁজুন", href: `${base}/emergency-contacts/nephrology-doctors` },
-  ],
-  "transplant:post": [
-    { en: "Renal Transplantation articles (post-transplant care)", bn: "রেনাল ট্রান্সপ্লান্টেশন আর্টিকেল সমূহ (প্রতিস্থাপন পরবর্তী যত্ন)", href: `${base}/know-your-kidney/renal-transplantation` },
-    { en: "Renal Diet guidelines", bn: "রেনাল ডায়েট নির্দেশিকা", href: `${base}/know-your-kidney/renal-diet` },
-  ],
-  "transplant:find-doctor": [
-    { en: "Nephrology Doctors directory", bn: "নেফ্রোলজি ডাক্তার তালিকা", href: `${base}/emergency-contacts/nephrology-doctors` },
-    { en: "Renal Transplantation articles", bn: "রেনাল ট্রান্সপ্লান্টেশন আর্টিকেল সমূহ", href: `${base}/know-your-kidney/renal-transplantation` },
-  ],
-  "diet:renal-diet": [
-    { en: "Renal Diet guidelines", bn: "রেনাল ডায়েট নির্দেশিকা", href: `${base}/know-your-kidney/renal-diet` },
-    { en: "Diabetes & kidney articles", bn: "ডায়াবেটিস ও কিডনি আর্টিকেল সমূহ", href: `${base}/know-your-kidney/diabetes` },
-  ],
-  "diet:diabetes": [
-    { en: "Diabetes articles", bn: "ডায়াবেটিস আর্টিকেল সমূহ", href: `${base}/know-your-kidney/diabetes` },
-    { en: "Renal Diet guidelines", bn: "রেনাল ডায়েট নির্দেশিকা", href: `${base}/know-your-kidney/renal-diet` },
-  ],
-  "diet:general": [
-    { en: "Other kidney health articles", bn: "অন্যান্য কিডনি স্বাস্থ্য আর্টিকেল", href: `${base}/know-your-kidney/others` },
-    { en: "Renal Diet guidelines", bn: "রেনাল ডায়েট নির্দেশিকা", href: `${base}/know-your-kidney/renal-diet` },
-  ],
-  "contacts:nephrologist": [{ en: "Nephrology Doctors directory", bn: "নেফ্রোলজি ডাক্তার তালিকা", href: `${base}/emergency-contacts/nephrology-doctors` }],
-  "contacts:vascular": [{ en: "Vascular / Fistula Surgeons directory", bn: "ভাস্কুলার / ফিস্টুলা সার্জন তালিকা", href: `${base}/emergency-contacts/vascular-surgeons` }],
-  "contacts:dialysis-center": [{ en: "Dialysis Centers directory", bn: "ডায়ালাইসিস সেন্টার তালিকা", href: `${base}/emergency-contacts/dialysis-centers` }],
-  "contacts:blood": [{ en: "Blood Banks directory", bn: "ব্লাড ব্যাংক তালিকা", href: `${base}/emergency-contacts/blood-banks` }],
+const TOPICS: Record<string, { bn: string; en: string; desc: { bn: string; en: string }; links: { bn: string; en: string; href: string }[] }> = {
+  diet: {
+    bn: "রেনাল ডায়েট", en: "Renal Diet", desc: { bn: "কী খাবেন, কী খাবেন না", en: "What to eat and avoid" },
+    links: [{ bn: "রেনাল ডায়েট নির্দেশিকা", en: "Renal diet guideline", href: `${base}/know-your-kidney/renal-diet/renal-diet-guideline` }],
+  },
+  potassium: {
+    bn: "পটাসিয়াম নিয়ন্ত্রণ", en: "Potassium Control", desc: { bn: "সবজি থেকে পটাসিয়াম কমানো", en: "Reducing potassium from vegetables" },
+    links: [{ bn: "পটাসিয়াম ও CKD", en: "Potassium & CKD", href: `${base}/know-your-kidney/renal-diet/electrolyte-balance-potassium-during-ckd` }],
+  },
+  phosphorus: {
+    bn: "ফসফরাস নিয়ন্ত্রণ", en: "Phosphorus Control", desc: { bn: "হাড় সুরক্ষা ও খাদ্য", en: "Bone protection & diet" },
+    links: [{ bn: "ফসফরাস বা ফসফেট", en: "Phosphorus or Phosphate", href: `${base}/know-your-kidney/renal-diet/phosphorus-or-phosphate` }],
+  },
+  water: {
+    bn: "পানি নিয়ন্ত্রণ", en: "Water Intake", desc: { bn: "দৈনিক পানির পরিমাণ", en: "Daily fluid amount" },
+    links: [{ bn: "পানি ব্যালেন্স (ডায়ালাইসিস)", en: "Water balance (dialysis)", href: `${base}/know-your-kidney/renal-diet/water-balance-in-dialysis` }],
+  },
+  salt: {
+    bn: "লবন নিয়ন্ত্রণ", en: "Salt Control", desc: { bn: "সোডিয়াম সীমিত রাখা", en: "Limiting sodium" },
+    links: [{ bn: "লবন / সোডিয়াম (NaCl)", en: "Salt intake (NaCl)", href: `${base}/know-your-kidney/renal-diet/salt-intake-nacl` }],
+  },
+  dialysis_prep: {
+    bn: "ডায়ালাইসিস প্রস্তুতি", en: "Dialysis Prep", desc: { bn: "কখন ও কিভাবে শুরু হয়", en: "When & how it starts" },
+    links: [{ bn: "ডায়ালাইসিস কী, কয় প্রকার ও কেন প্রয়োজন", en: "About Dialysis", href: `${base}/know-your-kidney/dialysis/ডায়ালাইসিস-কি-কয়-প্রকার-এবং-এর-প্রয়োজন-কেন` }],
+  },
+  dialysis_process: {
+    bn: "ডায়ালাইসিস প্রক্রিয়া", en: "Dialysis Process", desc: { bn: "HD ও PD সম্পর্কে জানুন", en: "Learn about HD & PD" },
+    links: [{ bn: "ডায়ালাইসিসের আদ্যপান্ত", en: "All About Dialysis", href: `${base}/know-your-kidney/dialysis/what-is-dialysis-all-about-dialysis` }],
+  },
+  fistula: {
+    bn: "ফিস্টুলা পরিচর্যা", en: "Fistula Care", desc: { bn: "লাইফলাইন রক্ষা করুন", en: "Protect your lifeline" },
+    links: [
+      { bn: "ফিস্টুলার ব্যবহারবিধি ও পরিচর্যা", en: "Fistula use & care", href: `${base}/know-your-kidney/dialysis/কিডনি-রোগীদের-লাইফ-লাইন-ফিস্টুলার-ব্যবহারবিধি-এবং-পরিচর্যা` },
+      { bn: "ভাস্কুলার / ফিস্টুলা সার্জন তালিকা", en: "Vascular / Fistula Surgeons directory", href: `${base}/emergency-contacts/vascular-surgeons` },
+    ],
+  },
+  dry_weight: {
+    bn: "ড্রাই ওয়েট", en: "Dry Weight", desc: { bn: "শরীরের পানি ব্যালেন্স", en: "Body fluid balance" },
+    links: [{ bn: "ফ্লুইড ম্যানেজমেন্ট ও ড্রাই ওয়েট", en: "Fluid management & dry weight", href: `${base}/know-your-kidney/dialysis/fluid-management-dry-weight` }],
+  },
+  transplant: {
+    bn: "ট্রান্সপ্লান্ট", en: "Transplant", desc: { bn: "কিডনি প্রতিস্থাপন", en: "Kidney transplantation" },
+    links: [
+      { bn: "কিডনি ট্রান্সপ্লান্টেশন কী", en: "What is kidney transplantation", href: `${base}/know-your-kidney/renal-transplantation/what-is-kidney-transplantation` },
+      { bn: "নেফ্রোলজি ডাক্তার তালিকা", en: "Nephrology Doctors directory", href: `${base}/emergency-contacts/nephrology-doctors` },
+    ],
+  },
+  anemia: {
+    bn: "রক্তশূন্যতা", en: "Anemia", desc: { bn: "কারণ ও চিকিৎসা", en: "Causes & treatment" },
+    links: [{ bn: "রক্তশূন্যতা ও কিডনি রোগ", en: "Anemia & kidney disease", href: `${base}/know-your-kidney/ckd/anemia` }],
+  },
+  bone: {
+    bn: "হাড়ের সুরক্ষা", en: "Bone Protection", desc: { bn: "ক্যালসিয়াম ও ভিটামিন D", en: "Calcium & Vitamin D" },
+    links: [{ bn: "কিডনি ও বোন মিনারেল ডিজিজ", en: "Kidney & bone mineral disease", href: `${base}/know-your-kidney/ckd/কিডনি-এবং-বন-মিনারেল-ডিজিজ-হাড্ডির-রোগ` }],
+  },
+  bp: {
+    bn: "রক্তচাপ নিয়ন্ত্রণ", en: "Blood Pressure Control", desc: { bn: "সঠিকভাবে BP মাপা ও নিয়ন্ত্রণ", en: "Measuring & controlling BP" },
+    links: [{ bn: "সঠিকভাবে ব্লাড প্রেশার মাপার নিয়ম", en: "How to measure blood pressure accurately", href: `${base}/know-your-kidney/others/tips-how-to-measure-blood-pressure-accurately` }],
+  },
+  sugar: {
+    bn: "সুগার নিয়ন্ত্রণ", en: "Blood Sugar Control", desc: { bn: "ডায়াবেটিস ও কিডনি", en: "Diabetes & kidneys" },
+    links: [{ bn: "ডায়াবেটিস ও নিয়ন্ত্রণ", en: "Diabetes & control", href: `${base}/know-your-kidney/diabetes/ডায়াবেটিস-ও-নিয়ন্ত্রণ` }],
+  },
+  tests: {
+    bn: "কিডনি পরীক্ষা", en: "Kidney Tests", desc: { bn: "কোন কোন টেস্ট করবেন", en: "Which tests to get" },
+    links: [{ bn: "কিডনি রোগ নিরূপণে প্রয়োজনীয় টেস্ট", en: "Tests to check for kidney disease", href: `${base}/know-your-kidney/kidney-basic/কিডনী-রোগ-নিরুপনের-জন্য-বা-সতর্ক-হতে-সাধারণত-কি-কি-টেস্ট-বা-পরীক্ষা-করতে-হবে` }],
+  },
+  infection: {
+    bn: "সংক্রমণ প্রতিরোধ", en: "Infection Prevention", desc: { bn: "ভাইরাস ও ভ্যাকসিন", en: "Viruses & vaccines" },
+    links: [{ bn: "CKD ও ট্রান্সপ্লান্ট আর্টিকেল সমূহ", en: "CKD articles (infections)", href: `${base}/know-your-kidney/ckd` }],
+  },
+  vaccine: {
+    bn: "ভ্যাকসিন গাইড", en: "Vaccine Guide", desc: { bn: "CKD/ট্রান্সপ্লান্ট ভ্যাকসিন", en: "CKD/transplant vaccines" },
+    links: [{ bn: "CKD ও ট্রান্সপ্লান্ট রোগীদের ভ্যাকসিন গাইডলাইন", en: "Vaccine guidelines for CKD/transplant patients", href: `${base}/know-your-kidney/ckd/vaccine-guidelines-for-ckd-transplant-recipient` }],
+  },
+  symptoms: {
+    bn: "কিডনি রোগের লক্ষণ", en: "Kidney Disease Symptoms", desc: { bn: "কিভাবে বুঝবেন", en: "How to recognize it" },
+    links: [{ bn: "কিডনি বেসিক আর্টিকেল সমূহ", en: "Kidney Basics articles", href: `${base}/know-your-kidney/kidney-basic` }],
+  },
+  prevention: {
+    bn: "কিডনি সুরক্ষা", en: "Kidney Protection", desc: { bn: "১০ সুনিয়ম", en: "10 golden rules" },
+    links: [{ bn: "কিডনি সুস্থ রাখার ১০ টি উপায়", en: "10 golden rules for healthy kidneys", href: `${base}/know-your-kidney/kidney-basic/golden-rules-to-keep-your-kidneys-healthy` }],
+  },
+  fasting: {
+    bn: "রোযা ও কিডনি", en: "Fasting & Kidneys", desc: { bn: "রোযা রাখা যাবে কিনা", en: "Is fasting safe" },
+    links: [{ bn: "কিডনি রোগ এবং রোযা", en: "Kidney disease & fasting", href: `${base}/know-your-kidney/ckd/কিডনি-রোগ-এবং-রোযা` }],
+  },
+  pregnancy: {
+    bn: "গর্ভাবস্থা ও কিডনি", en: "Pregnancy & Kidneys", desc: { bn: "ঝুঁকি ও সতর্কতা", en: "Risks & precautions" },
+    links: [{ bn: "কিডনি রোগ ও গর্ভাবস্থা আর্টিকেল সমূহ", en: "Kidney Disease & Pregnancy articles", href: `${base}/know-your-kidney/kidney-disease-and-pregnancy` }],
+  },
+  stages: {
+    bn: "CKD স্টেজ বুঝুন", en: "Understand CKD Stages", desc: { bn: "স্টেজ ১ থেকে ৫", en: "Stage 1 through 5" },
+    links: [{ bn: "কিডনি রোগের স্টেজ / স্তর / অগ্রগতির পর্ব", en: "Stages of kidney disease", href: `${base}/know-your-kidney/kidney-basic/কিডনি-রোগের-স্টেজ-স্তর-অগ্রগতির-পর্ব` }],
+  },
+  medicine: {
+    bn: "ওষুধ সতর্কতা", en: "Medicine Caution", desc: { bn: "কোন ওষুধ ক্ষতিকর", en: "Which medicines are harmful" },
+    links: [{ bn: "প্রতিস্থাপন পরবর্তী ওষুধ সেবনবিধি", en: "Immunosuppressive medicine after transplant", href: `${base}/know-your-kidney/renal-transplantation/how-to-take-immunosuppressive-medicine-after-transplant` }],
+  },
+  uric_acid: {
+    bn: "ইউরিক অ্যাসিড", en: "Uric Acid", desc: { bn: "কারণ ও খাদ্য তালিকা", en: "Causes & diet" },
+    links: [{ bn: "ইউরিক অ্যাসিড", en: "Uric Acid", href: `${base}/know-your-kidney/renal-diet/uric-acid` }],
+  },
+  contacts: {
+    bn: "জরুরি যোগাযোগ", en: "Emergency Contacts", desc: { bn: "ডাক্তার ও হাসপাতাল", en: "Doctors & hospitals" },
+    links: [{ bn: "জরুরি যোগাযোগ", en: "Emergency Contacts directory", href: `${base}/emergency-contacts` }],
+  },
 };
 
 const PERSONA_INTRO: Record<string, { en: string; bn: string }> = {
   patient: { en: "As a kidney patient, here's what might help:", bn: "আপনি একজন কিডনি রোগী হিসেবে, নিচের বিষয়গুলো আপনার জন্য সহায়ক হতে পারে:" },
   caregiver: { en: "As a caregiver, here's what might help:", bn: "আপনি একজন কেয়ারগিভার হিসেবে, নিচের বিষয়গুলো আপনার জন্য সহায়ক হতে পারে:" },
-  professional: { en: "For healthcare professionals, here's what might help:", bn: "একজন স্বাস্থ্যকর্মী হিসেবে, নিচের বিষয়গুলো আপনার জন্য সহায়ক হতে পারে:" },
-  learner: { en: "Here's a good place to start:", bn: "শুরু করার জন্য এগুলো দেখতে পারেন:" },
+  at_risk: { en: "Since you're at risk, here's what might help:", bn: "আপনি ঝুঁকিপূর্ণ হিসেবে, নিচের বিষয়গুলো আপনার জন্য সহায়ক হতে পারে:" },
+  general: { en: "Here's a good place to start:", bn: "শুরু করার জন্য এগুলো দেখতে পারেন:" },
 };
 
-const DATA = { PERSONAS, TOPICS, NEEDS, RESULTS, PERSONA_INTRO };
+const DATA = { STEPS, TOPICS, PERSONA_INTRO };
 ---
 
 <BaseLayout title="Find Help" description="Answer a few quick questions and we'll point you to the right BKPA Foundation resources.">
@@ -133,38 +187,13 @@ const DATA = { PERSONAS, TOPICS, NEEDS, RESULTS, PERSONA_INTRO };
     <div class="mx-auto max-w-3xl px-6 md:px-10">
       <p id="fh-progress" class="font-mono text-xs tracking-wider text-(--color-ink-soft) uppercase"></p>
 
-      <!-- Step 1: Persona -->
-      <div id="fh-step-1" class="fh-step mt-4">
-        <h2 class="font-display text-[1.3rem] font-semibold"><span class="i18n-bn bn">আপনি কে?</span><span class="i18n-en">I am a...</span></h2>
-        <div class="mt-5 grid grid-cols-2 gap-3.5 sm:grid-cols-4">
-          {PERSONAS.map((p) => (
-            <button type="button" data-persona={p.id} class="fh-option rounded-lg border border-(--color-line) bg-(--color-surface) p-4 text-center text-sm font-semibold hover:border-(--color-deep)">
-              <span class="i18n-bn bn">{p.bn}</span><span class="i18n-en">{p.en}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <!-- Step 2: Topic -->
-      <div id="fh-step-2" class="fh-step mt-4 hidden">
-        <h2 class="font-display text-[1.3rem] font-semibold"><span class="i18n-bn bn">আপনি কী সম্পর্কে জানতে চান?</span><span class="i18n-en">What would you like to know about?</span></h2>
-        <div class="mt-5 grid gap-3.5 sm:grid-cols-2">
-          {TOPICS.map((t) => (
-            <button type="button" data-topic={t.id} class="fh-option rounded-lg border border-(--color-line) bg-(--color-surface) p-4 text-left text-sm font-semibold hover:border-(--color-deep)">
-              <span class="i18n-bn bn">{t.bn}</span><span class="i18n-en">{t.en}</span>
-            </button>
-          ))}
-        </div>
-        <button type="button" class="fh-back mt-5 font-mono text-xs tracking-wider text-(--color-ink-soft) uppercase hover:text-(--color-deep)">
-          ← <span class="i18n-bn bn">পেছনে</span><span class="i18n-en">Back</span>
+      <div id="fh-question" class="mt-4">
+        <h2 id="fh-question-title" class="font-display text-[1.3rem] font-semibold"></h2>
+        <div id="fh-options" class="mt-5 grid gap-3.5 sm:grid-cols-2"></div>
+        <button type="button" id="fh-multi-next" class="mt-5 hidden rounded-md bg-(--color-deep) px-5 py-2.5 text-sm font-semibold text-(--color-deep-ink) hover:brightness-110">
+          <span class="i18n-bn bn">পরবর্তী</span><span class="i18n-en">Next</span> →
         </button>
-      </div>
-
-      <!-- Step 3: Need (options injected by script based on topic) -->
-      <div id="fh-step-3" class="fh-step mt-4 hidden">
-        <h2 class="font-display text-[1.3rem] font-semibold"><span class="i18n-bn bn">আরেকটু নির্দিষ্ট করে বলুন</span><span class="i18n-en">Get more specific</span></h2>
-        <div id="fh-needs" class="mt-5 grid gap-3.5 sm:grid-cols-2"></div>
-        <button type="button" class="fh-back mt-5 font-mono text-xs tracking-wider text-(--color-ink-soft) uppercase hover:text-(--color-deep)">
+        <button type="button" id="fh-back" class="mt-5 hidden font-mono text-xs tracking-wider text-(--color-ink-soft) uppercase hover:text-(--color-deep)">
           ← <span class="i18n-bn bn">পেছনে</span><span class="i18n-en">Back</span>
         </button>
       </div>
@@ -182,102 +211,251 @@ const DATA = { PERSONAS, TOPICS, NEEDS, RESULTS, PERSONA_INTRO };
 </BaseLayout>
 
 <script define:vars={{ DATA }}>
-  const { TOPICS, NEEDS, RESULTS, PERSONA_INTRO } = DATA;
+  const { STEPS, TOPICS, PERSONA_INTRO } = DATA;
   const lang = () => document.getElementById("page")?.getAttribute("data-lang") || "bn";
+  const t = (obj) => (lang() === "en" ? obj.en : obj.bn);
 
-  const state = { persona: null, topic: null, need: null };
+  const profile = { role: null, condition: null, stage: null, comorbidities: [] };
+  let stepIndex = 0; // index into visible STEPS, or -1 for topic-picker, or -2 for results
+  let multiSelected = [];
 
-  const steps = {
-    1: document.getElementById("fh-step-1"),
-    2: document.getElementById("fh-step-2"),
-    3: document.getElementById("fh-step-3"),
-  };
+  const questionEl = document.getElementById("fh-question");
+  const titleEl = document.getElementById("fh-question-title");
+  const optionsEl = document.getElementById("fh-options");
+  const multiNextBtn = document.getElementById("fh-multi-next");
+  const backBtn = document.getElementById("fh-back");
   const resultsEl = document.getElementById("fh-results");
   const progressEl = document.getElementById("fh-progress");
 
-  let currentStep = 1;
-  let onResults = false;
-
-  function showStep(n) {
-    currentStep = n;
-    onResults = false;
-    Object.entries(steps).forEach(([k, el]) => el.classList.toggle("hidden", Number(k) !== n));
-    resultsEl.classList.add("hidden");
-    const labels = lang() === "en" ? ["Who you are", "Topic", "Specifics"] : ["পরিচয়", "বিষয়", "নির্দিষ্ট তথ্য"];
-    progressEl.textContent = `${lang() === "en" ? "Step" : "ধাপ"} ${n} / 3 — ${labels[n - 1]}`;
+  // Step visibility rules (kept in JS, not on the STEPS data, since Astro's
+  // define:vars JSON-serializes DATA and functions don't survive that trip).
+  function isStepVisible(step) {
+    if (step.key === "condition") return !!profile.role && profile.role !== "general";
+    if (step.key === "stage") return profile.condition === "ckd";
+    return true;
   }
 
-  document.querySelectorAll("#fh-step-1 [data-persona]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      state.persona = btn.dataset.persona;
-      showStep(2);
-    });
-  });
+  function visibleSteps() {
+    return STEPS.filter(isStepVisible);
+  }
 
-  document.querySelectorAll("#fh-step-2 [data-topic]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      state.topic = btn.dataset.topic;
-      renderNeeds(state.topic);
-      showStep(3);
-    });
-  });
+  function getRecommendedTopics() {
+    const { role, condition, stage, comorbidities } = profile;
+    const hasDiabetes = comorbidities.includes("diabetes");
+    const hasBP = comorbidities.includes("hypertension");
+    const stageNum = parseInt(stage) || 0;
+    let ids = [];
 
-  function renderNeeds(topicId) {
-    const container = document.getElementById("fh-needs");
-    container.innerHTML = "";
-    (NEEDS[topicId] || []).forEach((need) => {
+    if (role === "general") {
+      ids = ["symptoms", "prevention", "tests", "stages"];
+      if (hasDiabetes) ids.push("sugar");
+      if (hasBP) ids.push("bp");
+      return ids;
+    }
+    if (role === "at_risk") {
+      ids = ["symptoms", "prevention", "tests"];
+      if (hasDiabetes) ids.push("sugar");
+      if (hasBP) ids.push("bp", "salt");
+      ids.push("stages");
+      return ids;
+    }
+    if (condition === "dialysis") {
+      ids = ["dialysis_process", "fistula", "dry_weight", "diet", "potassium", "water", "salt", "anemia", "infection", "transplant", "vaccine", "fasting"];
+      if (hasDiabetes) ids.splice(6, 0, "sugar");
+      if (hasBP) ids.splice(6, 0, "bp");
+      return ids;
+    }
+    if (condition === "transplant") {
+      ids = ["infection", "vaccine", "diet", "medicine", "tests", "prevention"];
+      if (hasDiabetes) ids.splice(3, 0, "sugar");
+      if (hasBP) ids.splice(3, 0, "bp");
+      ids.push("fasting", "pregnancy");
+      return ids;
+    }
+    if (condition === "aki") {
+      ids = ["tests", "water", "diet", "medicine", "symptoms"];
+      if (hasDiabetes) ids.push("sugar");
+      if (hasBP) ids.push("bp");
+      ids.push("prevention");
+      return ids;
+    }
+    if (condition === "ckd") {
+      if (stageNum <= 2) {
+        ids = ["prevention", "diet", "salt", "tests", "stages", "medicine"];
+        if (hasDiabetes) ids.splice(2, 0, "sugar");
+        if (hasBP) ids.splice(2, 0, "bp");
+        ids.push("fasting");
+      } else if (stageNum === 3) {
+        ids = ["diet", "potassium", "phosphorus", "salt", "water", "anemia", "bone", "tests", "medicine"];
+        if (hasDiabetes) ids.splice(5, 0, "sugar");
+        if (hasBP) ids.splice(5, 0, "bp");
+        ids.push("dialysis_prep", "fasting");
+      } else if (stageNum === 4) {
+        ids = ["dialysis_prep", "fistula", "diet", "potassium", "phosphorus", "water", "salt", "anemia", "bone"];
+        if (hasDiabetes) ids.splice(7, 0, "sugar");
+        if (hasBP) ids.splice(7, 0, "bp");
+        ids.push("transplant", "infection", "vaccine", "fasting");
+      } else if (stageNum >= 5) {
+        ids = ["dialysis_process", "dialysis_prep", "fistula", "diet", "potassium", "water", "salt", "anemia", "bone", "transplant", "infection", "vaccine"];
+        if (hasDiabetes) ids.splice(7, 0, "sugar");
+        if (hasBP) ids.splice(7, 0, "bp");
+        ids.push("dry_weight", "fasting");
+      } else {
+        ids = ["stages", "tests", "diet", "salt", "water", "prevention", "medicine"];
+        if (hasDiabetes) ids.push("sugar");
+        if (hasBP) ids.push("bp");
+        ids.push("anemia", "fasting");
+      }
+      return ids;
+    }
+    ids = ["symptoms", "tests", "stages", "prevention"];
+    if (hasDiabetes) ids.push("sugar");
+    if (hasBP) ids.push("bp");
+    ids.push("diet", "medicine");
+    return ids;
+  }
+
+  function render() {
+    resultsEl.classList.add("hidden");
+    questionEl.classList.remove("hidden");
+
+    if (stepIndex === -1) {
+      renderTopicPicker();
+      return;
+    }
+
+    const steps = visibleSteps();
+    const step = steps[stepIndex];
+    progressEl.textContent = `${lang() === "en" ? "Step" : "ধাপ"} ${stepIndex + 1} / ${steps.length + 1}`;
+    titleEl.textContent = t(step.q);
+    optionsEl.innerHTML = "";
+    multiNextBtn.classList.toggle("hidden", !step.multi);
+    backBtn.classList.toggle("hidden", stepIndex === 0);
+
+    if (step.multi) {
+      multiSelected = [];
+      step.options.forEach((opt) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "fh-option rounded-lg border border-(--color-line) bg-(--color-surface) p-4 text-left text-sm font-semibold hover:border-(--color-deep)";
+        btn.textContent = t(opt);
+        btn.addEventListener("click", () => {
+          if (opt.value === "none") {
+            multiSelected = ["none"];
+          } else {
+            multiSelected = multiSelected.filter((v) => v !== "none");
+            multiSelected = multiSelected.includes(opt.value) ? multiSelected.filter((v) => v !== opt.value) : [...multiSelected, opt.value];
+          }
+          syncMultiHighlight();
+        });
+        btn.dataset.value = opt.value;
+        optionsEl.appendChild(btn);
+      });
+      syncMultiHighlight();
+    } else {
+      step.options.forEach((opt) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "fh-option rounded-lg border border-(--color-line) bg-(--color-surface) p-4 text-left text-sm font-semibold hover:border-(--color-deep)";
+        btn.textContent = t(opt);
+        btn.addEventListener("click", () => {
+          profile[step.key] = opt.value;
+          advance();
+        });
+        optionsEl.appendChild(btn);
+      });
+    }
+  }
+
+  function syncMultiHighlight() {
+    optionsEl.querySelectorAll("[data-value]").forEach((btn) => {
+      btn.classList.toggle("border-(--color-deep)", multiSelected.includes(btn.dataset.value));
+      btn.classList.toggle("bg-(--color-surface-2)", multiSelected.includes(btn.dataset.value));
+    });
+  }
+
+  function renderTopicPicker() {
+    const steps = visibleSteps();
+    progressEl.textContent = `${lang() === "en" ? "Step" : "ধাপ"} ${steps.length + 1} / ${steps.length + 1}`;
+    titleEl.textContent = lang() === "en" ? "What would you like to know about?" : "আপনি কী সম্পর্কে জানতে চান?";
+    backBtn.classList.remove("hidden");
+    multiNextBtn.classList.add("hidden");
+    optionsEl.innerHTML = "";
+    getRecommendedTopics().forEach((id) => {
+      const topic = TOPICS[id];
+      if (!topic) return;
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "fh-option rounded-lg border border-(--color-line) bg-(--color-surface) p-4 text-left text-sm font-semibold hover:border-(--color-deep)";
-      btn.innerHTML = `<span class="i18n-bn bn">${need.bn}</span><span class="i18n-en">${need.en}</span>`;
-      btn.addEventListener("click", () => {
-        state.need = need.id;
-        showResults();
-      });
-      container.appendChild(btn);
+      btn.className = "fh-option flex flex-col rounded-lg border border-(--color-line) bg-(--color-surface) p-4 text-left hover:border-(--color-deep)";
+      btn.innerHTML = `<span class="text-sm font-semibold">${t(topic)}</span><span class="mt-1 text-xs text-(--color-ink-soft)">${t(topic.desc)}</span>`;
+      btn.addEventListener("click", () => showResults(id));
+      optionsEl.appendChild(btn);
     });
   }
 
-  function showResults() {
-    onResults = true;
-    Object.values(steps).forEach((el) => el.classList.add("hidden"));
+  function advance() {
+    const steps = visibleSteps();
+    if (stepIndex < steps.length - 1) {
+      stepIndex++;
+    } else {
+      stepIndex = -1;
+    }
+    render();
+  }
+
+  multiNextBtn.addEventListener("click", () => {
+    const steps = visibleSteps();
+    profile.comorbidities = multiSelected.length ? multiSelected : ["none"];
+    advance();
+  });
+
+  backBtn.addEventListener("click", () => {
+    if (stepIndex === -1) {
+      stepIndex = visibleSteps().length - 1;
+    } else if (stepIndex > 0) {
+      stepIndex--;
+    }
+    render();
+  });
+
+  function showResults(topicId) {
+    questionEl.classList.add("hidden");
     resultsEl.classList.remove("hidden");
     progressEl.textContent = lang() === "en" ? "Result" : "ফলাফল";
 
-    const intro = PERSONA_INTRO[state.persona];
-    document.getElementById("fh-results-intro").textContent = lang() === "en" ? intro.en : intro.bn;
+    const intro = PERSONA_INTRO[profile.role] || PERSONA_INTRO.general;
+    document.getElementById("fh-results-intro").textContent = t(intro);
 
-    const key = `${state.topic}:${state.need}`;
-    const links = RESULTS[key] || [];
+    const topic = TOPICS[topicId];
     const listEl = document.getElementById("fh-results-list");
     listEl.innerHTML = "";
-    links.forEach((link) => {
+    (topic?.links || []).forEach((link) => {
       const a = document.createElement("a");
       a.href = link.href;
       a.className = "flex items-center justify-between gap-3 rounded-lg border border-(--color-line) bg-(--color-surface) p-4 hover:border-(--color-deep)";
-      a.innerHTML = `<span class="text-sm font-semibold">${lang() === "en" ? link.en : link.bn}</span><span aria-hidden="true">→</span>`;
+      a.innerHTML = `<span class="text-sm font-semibold">${t(link)}</span><span aria-hidden="true">→</span>`;
       listEl.appendChild(a);
     });
+    resultsEl.dataset.topic = topicId;
   }
 
-  document.querySelectorAll(".fh-back").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      if (!steps[2].classList.contains("hidden")) showStep(1);
-      else if (!steps[3].classList.contains("hidden")) showStep(2);
-    });
-  });
-
   document.getElementById("fh-restart").addEventListener("click", () => {
-    state.persona = state.topic = state.need = null;
-    showStep(1);
+    profile.role = profile.condition = profile.stage = null;
+    profile.comorbidities = [];
+    stepIndex = 0;
+    render();
   });
 
-  showStep(1);
+  render();
 
-  const langObserver = new MutationObserver(() => {
-    if (onResults) showResults();
-    else showStep(currentStep);
-  });
   const pageEl = document.getElementById("page");
-  if (pageEl) langObserver.observe(pageEl, { attributes: true, attributeFilter: ["data-lang"] });
+  if (pageEl) {
+    new MutationObserver(() => {
+      if (!resultsEl.classList.contains("hidden") && resultsEl.dataset.topic) {
+        showResults(resultsEl.dataset.topic);
+      } else {
+        render();
+      }
+    }).observe(pageEl, { attributes: true, attributeFilter: ["data-lang"] });
+  }
 </script>
