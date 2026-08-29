@@ -1,4 +1,5 @@
 ---
+import CategoryIcon from "./CategoryIcon.astro";
 import { CATEGORIES, EMERGENCY_CATEGORIES } from "../lib/categories";
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -29,7 +30,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
         >
           {
             CATEGORIES.map((c) => (
-              <a class="rounded-md px-3 py-2 text-sm text-(--color-ink-soft) hover:bg-(--color-surface-2) hover:text-(--color-ink)" href={`${base}/know-your-kidney/${c.slug}`}>
+              <a class="flex items-center gap-2.5 rounded-md px-3 py-2 text-sm text-(--color-ink-soft) hover:bg-(--color-surface-2) hover:text-(--color-ink)" href={`${base}/know-your-kidney/${c.slug}`}>
+                <CategoryIcon slug={c.slug} class="h-4 w-4 flex-none" />
                 <span class="i18n-bn bn">{c.labelBn}</span>
                 <span class="i18n-en">{c.labelEn}</span>
               </a>
@@ -87,7 +89,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href={`${base}/executive-body`}><span class="i18n-bn bn">কার্যনির্বাহী পরিষদ</span><span class="i18n-en">Executive Body</span></a>
     <p class="pt-3 font-mono text-[0.68rem] tracking-wider text-(--color-ink-soft) uppercase"><span class="i18n-bn bn">কিডনি সম্পর্কে জানুন</span><span class="i18n-en">Know Your Kidney</span></p>
     {CATEGORIES.map((c) => (
-      <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href={`${base}/know-your-kidney/${c.slug}`}>
+      <a class="flex items-center gap-2.5 border-b border-(--color-line) py-2.5 text-sm font-semibold" href={`${base}/know-your-kidney/${c.slug}`}>
+        <CategoryIcon slug={c.slug} class="h-4 w-4 flex-none" />
         <span class="i18n-bn bn">{c.labelBn}</span><span class="i18n-en">{c.labelEn}</span>
       </a>
     ))}

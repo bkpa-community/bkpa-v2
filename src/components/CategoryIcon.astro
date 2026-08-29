@@ -1,0 +1,13 @@
+---
+import { CATEGORY_ICON_PATHS } from "../lib/categoryIcons";
+
+interface Props {
+  slug: string;
+  class?: string;
+}
+
+const { slug, class: className = "h-5 w-5" } = Astro.props;
+const paths = CATEGORY_ICON_PATHS[slug] ?? CATEGORY_ICON_PATHS.others;
+---
+
+<svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={paths} />
