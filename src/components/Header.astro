@@ -6,17 +6,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 <header class="sticky top-0 z-40 border-b border-(--color-line) bg-(--color-paper)/90 backdrop-blur-sm">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-3 md:px-10">
-    <a class="flex items-center gap-2.5" href={`${base}/`}>
-      <svg class="h-8 w-8 flex-none" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <path d="M24 5c-8 0-13 7.5-13 16.5C11 33 16.5 43 24 43s13-10 13-21.5C37 12.5 32 5 24 5Z" fill="var(--color-deep)"></path>
-        <circle cx="24" cy="21" r="4.4" fill="var(--color-paper)"></circle>
-      </svg>
-      <span class="font-display text-[1.05rem] font-semibold leading-tight text-(--color-ink)">
-        BKPA Foundation
-        <small class="block font-mono text-[0.62rem] font-medium uppercase tracking-wider text-(--color-ink-soft)"
-          >Bangladesh Kidney Patient Assoc.</small
-        >
-      </span>
+    <a class="flex items-center" href={`${base}/`}>
+      <img class="logo-light h-9 w-auto" src={`${base}/images/logo.png`} alt="BKPA Foundation" />
+      <img class="logo-dark h-9 w-auto" src={`${base}/images/logo-white.png`} alt="BKPA Foundation" />
     </a>
 
     <nav class="hidden items-center gap-7 lg:flex" aria-label="Primary">
