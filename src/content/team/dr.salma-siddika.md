@@ -1,7 +1,7 @@
 ---
 order: 6
-name: Dr. Salma Siddika. EXECUTIVE MEMBER
-role: BKPA FOUNDATION
+name: Dr. Salma Siddika
+role: Executive Member, BKPA Foundation
 image: /images/img-20230415-wa0008.jpg
 ---
 
