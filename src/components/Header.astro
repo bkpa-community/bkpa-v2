@@ -1,10 +1,12 @@
 ---
 import { CATEGORIES, EMERGENCY_CATEGORIES } from "../lib/categories";
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <header class="sticky top-0 z-40 border-b border-(--color-line) bg-(--color-paper)/90 backdrop-blur-sm">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-3 md:px-10">
-    <a class="flex items-center gap-2.5" href="/">
+    <a class="flex items-center gap-2.5" href={`${base}/`}>
       <svg class="h-8 w-8 flex-none" viewBox="0 0 48 48" fill="none" aria-hidden="true">
         <path d="M24 5c-8 0-13 7.5-13 16.5C11 33 16.5 43 24 43s13-10 13-21.5C37 12.5 32 5 24 5Z" fill="var(--color-deep)"></path>
         <circle cx="24" cy="21" r="4.4" fill="var(--color-paper)"></circle>
@@ -18,10 +20,10 @@ import { CATEGORIES, EMERGENCY_CATEGORIES } from "../lib/categories";
     </a>
 
     <nav class="hidden items-center gap-7 lg:flex" aria-label="Primary">
-      <a class="text-sm font-semibold hover:text-(--color-accent)" href="/">
+      <a class="text-sm font-semibold hover:text-(--color-accent)" href={`${base}/`}>
         <span class="i18n-bn bn">হোম</span><span class="i18n-en">Home</span>
       </a>
-      <a class="text-sm font-semibold hover:text-(--color-accent)" href="/executive-body">
+      <a class="text-sm font-semibold hover:text-(--color-accent)" href={`${base}/executive-body`}>
         <span class="i18n-bn bn">কার্যনির্বাহী পরিষদ</span><span class="i18n-en">Executive Body</span>
       </a>
 
@@ -35,13 +37,13 @@ import { CATEGORIES, EMERGENCY_CATEGORIES } from "../lib/categories";
         >
           {
             CATEGORIES.map((c) => (
-              <a class="rounded-md px-3 py-2 text-sm text-(--color-ink-soft) hover:bg-(--color-surface-2) hover:text-(--color-ink)" href={`/know-your-kidney/${c.slug}`}>
+              <a class="rounded-md px-3 py-2 text-sm text-(--color-ink-soft) hover:bg-(--color-surface-2) hover:text-(--color-ink)" href={`${base}/know-your-kidney/${c.slug}`}>
                 <span class="i18n-bn bn">{c.labelBn}</span>
                 <span class="i18n-en">{c.labelEn}</span>
               </a>
             ))
           }
-          <a class="rounded-md px-3 py-2 text-sm text-(--color-ink-soft) hover:bg-(--color-surface-2) hover:text-(--color-ink)" href="/faq">
+          <a class="rounded-md px-3 py-2 text-sm text-(--color-ink-soft) hover:bg-(--color-surface-2) hover:text-(--color-ink)" href={`${base}/faq`}>
             <span class="i18n-bn bn">প্রায় জিজ্ঞাসিত প্রশ্ন</span><span class="i18n-en">FAQ</span>
           </a>
         </div>
@@ -57,7 +59,7 @@ import { CATEGORIES, EMERGENCY_CATEGORIES } from "../lib/categories";
         >
           {
             EMERGENCY_CATEGORIES.map((c) => (
-              <a class="rounded-md px-3 py-2 text-sm text-(--color-ink-soft) hover:bg-(--color-surface-2) hover:text-(--color-ink)" href={`/emergency-contacts/${c.slug}`}>
+              <a class="rounded-md px-3 py-2 text-sm text-(--color-ink-soft) hover:bg-(--color-surface-2) hover:text-(--color-ink)" href={`${base}/emergency-contacts/${c.slug}`}>
                 <span class="i18n-bn bn">{c.labelBn}</span>
                 <span class="i18n-en">{c.labelEn}</span>
               </a>
@@ -66,7 +68,7 @@ import { CATEGORIES, EMERGENCY_CATEGORIES } from "../lib/categories";
         </div>
       </div>
 
-      <a class="text-sm font-semibold hover:text-(--color-accent)" href="/contact">
+      <a class="text-sm font-semibold hover:text-(--color-accent)" href={`${base}/contact`}>
         <span class="i18n-bn bn">যোগাযোগ</span><span class="i18n-en">Contact Us</span>
       </a>
     </nav>
@@ -89,20 +91,20 @@ import { CATEGORIES, EMERGENCY_CATEGORIES } from "../lib/categories";
   </div>
 
   <div id="mobile-nav" class="hidden border-t border-(--color-line) px-6 pb-4 [&.open]:block lg:!hidden">
-    <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href="/"><span class="i18n-bn bn">হোম</span><span class="i18n-en">Home</span></a>
-    <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href="/executive-body"><span class="i18n-bn bn">কার্যনির্বাহী পরিষদ</span><span class="i18n-en">Executive Body</span></a>
+    <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href={`${base}/`}><span class="i18n-bn bn">হোম</span><span class="i18n-en">Home</span></a>
+    <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href={`${base}/executive-body`}><span class="i18n-bn bn">কার্যনির্বাহী পরিষদ</span><span class="i18n-en">Executive Body</span></a>
     <p class="pt-3 font-mono text-[0.68rem] tracking-wider text-(--color-ink-soft) uppercase"><span class="i18n-bn bn">কিডনি সম্পর্কে জানুন</span><span class="i18n-en">Know Your Kidney</span></p>
     {CATEGORIES.map((c) => (
-      <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href={`/know-your-kidney/${c.slug}`}>
+      <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href={`${base}/know-your-kidney/${c.slug}`}>
         <span class="i18n-bn bn">{c.labelBn}</span><span class="i18n-en">{c.labelEn}</span>
       </a>
     ))}
     <p class="pt-3 font-mono text-[0.68rem] tracking-wider text-(--color-ink-soft) uppercase"><span class="i18n-bn bn">জরুরি যোগাযোগ</span><span class="i18n-en">Emergency Contacts</span></p>
     {EMERGENCY_CATEGORIES.map((c) => (
-      <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href={`/emergency-contacts/${c.slug}`}>
+      <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href={`${base}/emergency-contacts/${c.slug}`}>
         <span class="i18n-bn bn">{c.labelBn}</span><span class="i18n-en">{c.labelEn}</span>
       </a>
     ))}
-    <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href="/contact"><span class="i18n-bn bn">যোগাযোগ</span><span class="i18n-en">Contact Us</span></a>
+    <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href={`${base}/contact`}><span class="i18n-bn bn">যোগাযোগ</span><span class="i18n-en">Contact Us</span></a>
   </div>
 </header>

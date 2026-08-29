@@ -8,6 +8,7 @@ const [featured, ...rest] = home.banners;
 
 const articles = await getCollection("articles", (a) => !a.data.draft);
 const countFor = (slug: string) => articles.filter((a) => a.id.startsWith(`${slug}/`)).length;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 ---
 
@@ -31,10 +32,10 @@ const countFor = (slug: string) => articles.filter((a) => a.id.startsWith(`${slu
           <span class="i18n-en">"Bridging the knowledge gap to better kidney care."</span>
         </p>
         <div class="mt-7 flex flex-wrap gap-3.5">
-          <a class="inline-flex items-center gap-2 rounded-md bg-(--color-accent) px-5.5 py-3 text-sm font-semibold text-(--color-accent-ink) hover:brightness-110" href="/emergency-contacts/nephrology-doctors">
+          <a class="inline-flex items-center gap-2 rounded-md bg-(--color-accent) px-5.5 py-3 text-sm font-semibold text-(--color-accent-ink) hover:brightness-110" href={`${base}/emergency-contacts/nephrology-doctors`}>
             <span class="i18n-bn bn">জরুরি সহায়তা</span><span class="i18n-en">Emergency Help</span>
           </a>
-          <a class="inline-flex items-center gap-2 rounded-md border border-(--color-line) px-5.5 py-3 text-sm font-semibold hover:bg-(--color-surface-2)" href="/know-your-kidney/kidney-basic">
+          <a class="inline-flex items-center gap-2 rounded-md border border-(--color-line) px-5.5 py-3 text-sm font-semibold hover:bg-(--color-surface-2)" href={`${base}/know-your-kidney/kidney-basic`}>
             <span class="i18n-bn bn">কিডনি সম্পর্কে জানুন</span><span class="i18n-en">Know Your Kidney</span>
           </a>
         </div>
@@ -115,7 +116,7 @@ const countFor = (slug: string) => articles.filter((a) => a.id.startsWith(`${slu
       </div>
       <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         {CATEGORIES.map((c) => (
-          <a class="flex min-h-[8.5rem] flex-col justify-between gap-3 rounded-lg border border-(--color-line) bg-(--color-surface) p-5 hover:border-(--color-deep)" href={`/know-your-kidney/${c.slug}`}>
+          <a class="flex min-h-[8.5rem] flex-col justify-between gap-3 rounded-lg border border-(--color-line) bg-(--color-surface) p-5 hover:border-(--color-deep)" href={`${base}/know-your-kidney/${c.slug}`}>
             <div>
               <p class="text-sm font-semibold leading-tight">
                 <span class="i18n-en">{c.labelEn}</span>
@@ -139,7 +140,7 @@ const countFor = (slug: string) => articles.filter((a) => a.id.startsWith(`${slu
       </div>
       <div class="grid grid-cols-2 gap-3.5 sm:grid-cols-3">
         {EMERGENCY_CATEGORIES.map((c) => (
-          <a class="rounded-lg border border-[color-mix(in_srgb,var(--color-accent-ink)_30%,transparent)] bg-[color-mix(in_srgb,var(--color-accent-ink)_12%,transparent)] p-4.5 hover:bg-[color-mix(in_srgb,var(--color-accent-ink)_20%,transparent)]" href={`/emergency-contacts/${c.slug}`}>
+          <a class="rounded-lg border border-[color-mix(in_srgb,var(--color-accent-ink)_30%,transparent)] bg-[color-mix(in_srgb,var(--color-accent-ink)_12%,transparent)] p-4.5 hover:bg-[color-mix(in_srgb,var(--color-accent-ink)_20%,transparent)]" href={`${base}/emergency-contacts/${c.slug}`}>
             <span class="block text-sm font-semibold"><span class="i18n-bn bn">{c.labelBn}</span><span class="i18n-en">{c.labelEn}</span></span>
           </a>
         ))}
@@ -150,13 +151,13 @@ const countFor = (slug: string) => articles.filter((a) => a.id.startsWith(`${slu
   <!-- ============ TEASERS ============ -->
   <section class="py-14">
     <div class="mx-auto grid max-w-6xl gap-4 px-6 md:grid-cols-2 md:px-10">
-      <a class="flex items-end justify-between gap-4 rounded-lg bg-(--color-deep) p-7 text-(--color-deep-ink) no-underline" href="/executive-body">
+      <a class="flex items-end justify-between gap-4 rounded-lg bg-(--color-deep) p-7 text-(--color-deep-ink) no-underline" href={`${base}/executive-body`}>
         <div>
           <h3 class="font-display text-[1.15rem] font-semibold"><span class="i18n-bn bn">কার্যনির্বাহী পরিষদ</span><span class="i18n-en">Executive Body</span></h3>
           <p class="mt-1.5 text-sm opacity-85"><span class="i18n-bn bn-body">যারা BKPA ফাউন্ডেশন পরিচালনা করছেন তাদের সাথে পরিচিত হন</span><span class="i18n-en">Meet the volunteers leading BKPA Foundation</span></p>
         </div>
       </a>
-      <a class="flex items-end justify-between gap-4 rounded-lg bg-(--color-deep) p-7 text-(--color-deep-ink) no-underline" href="/faq">
+      <a class="flex items-end justify-between gap-4 rounded-lg bg-(--color-deep) p-7 text-(--color-deep-ink) no-underline" href={`${base}/faq`}>
         <div>
           <h3 class="font-display text-[1.15rem] font-semibold"><span class="i18n-bn bn">প্রায় জিজ্ঞাসিত প্রশ্ন</span><span class="i18n-en">FAQ</span></h3>
           <p class="mt-1.5 text-sm opacity-85"><span class="i18n-bn bn-body">কিডনি স্বাস্থ্য নিয়ে সাধারণ প্রশ্নের উত্তর</span><span class="i18n-en">Common questions about kidney health, answered</span></p>

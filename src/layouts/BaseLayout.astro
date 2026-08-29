@@ -15,7 +15,7 @@ const { title, description = "Bangladesh Kidney Patient Association (BKPA) Found
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="/images/favicon.png" />
+    <link rel="icon" href={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/images/favicon.png`} />
     <title>{title} · BKPA Foundation</title>
     <meta name="description" content={description} />
 
