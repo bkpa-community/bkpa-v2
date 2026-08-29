@@ -1,0 +1,68 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = "Bangladesh Kidney Patient Association (BKPA) Foundation" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="bn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/images/favicon.png" />
+    <title>{title} · BKPA Foundation</title>
+    <meta name="description" content={description} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&family=Tiro+Bangla&family=Hind+Siliguri:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body id="page" data-lang="bn" class="overflow-x-hidden">
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      const page = document.getElementById("page")!;
+      const saved = (() => {
+        try {
+          return localStorage.getItem("bkpa-lang");
+        } catch {
+          return null;
+        }
+      })();
+      if (saved === "en" || saved === "bn") page.setAttribute("data-lang", saved);
+
+      function setLang(lang: "bn" | "en") {
+        page.setAttribute("data-lang", lang);
+        document.querySelectorAll<HTMLButtonElement>("[data-lang-btn]").forEach((btn) => {
+          btn.setAttribute("aria-pressed", String(btn.dataset.langBtn === lang));
+        });
+        try {
+          localStorage.setItem("bkpa-lang", lang);
+        } catch {}
+      }
+      document.querySelectorAll<HTMLButtonElement>("[data-lang-btn]").forEach((btn) => {
+        btn.setAttribute("aria-pressed", String(btn.dataset.langBtn === page.getAttribute("data-lang")));
+        btn.addEventListener("click", () => setLang(btn.dataset.langBtn as "bn" | "en"));
+      });
+
+      const mobBtn = document.getElementById("mobile-toggle");
+      const mobNav = document.getElementById("mobile-nav");
+      mobBtn?.addEventListener("click", () => {
+        const open = mobNav?.classList.toggle("open");
+        mobBtn.setAttribute("aria-expanded", String(!!open));
+      });
+    </script>
+  </body>
+</html>

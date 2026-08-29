@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { CATEGORIES, categoryBySlug } from "../../../lib/categories";
+
+export async function getStaticPaths() {
+  return CATEGORIES.map((c) => ({ params: { category: c.slug } }));
+}
+
+const { category } = Astro.params;
+const cat = categoryBySlug(category)!;
+const all = await getCollection("articles", (a) => !a.data.draft);
+const items = all
+  .filter((a) => a.id.startsWith(`${cat.slug}/`))
+  .sort((a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0));
+---
+
+<BaseLayout title={cat.labelEn} description={`${cat.labelEn} — articles from BKPA Foundation`}>
+  <section class="py-12">
+    <div class="mx-auto max-w-4xl px-6 md:px-10">
+      <p class="font-mono text-[0.72rem] tracking-wider text-(--color-ink-soft) uppercase">
+        <span class="i18n-bn bn">কিডনি সম্পর্কে জানুন</span><span class="i18n-en">Know Your Kidney</span>
+      </p>
+      <h1 class="mt-1.5 font-display text-[clamp(1.8rem,4vw,2.6rem)] font-semibold text-(--color-deep)">
+        <span class="i18n-en">{cat.labelEn}</span>
+        <span class="i18n-bn bn block">{cat.labelBn}</span>
+      </h1>
+
+      {items.length === 0 && (
+        <p class="mt-8 text-(--color-ink-soft)">
+          <span class="i18n-bn bn-body">এই ক্যাটাগরিতে এখনো কোনো আর্টিকেল যোগ করা হয়নি।</span>
+          <span class="i18n-en">No articles have been published in this category yet.</span>
+        </p>
+      )}
+
+      <ul class="mt-8 flex flex-col gap-3">
+        {items.map((a) => (
+          <li>
+            <a class="block rounded-lg border border-(--color-line) bg-(--color-surface) p-5 hover:border-(--color-deep)" href={`/know-your-kidney/${cat.slug}/${a.id.split("/").slice(1).join("/")}`}>
+              <h2 class="font-display text-[1.05rem] font-semibold">{a.data.title}</h2>
+              {a.data.date && (
+                <time class="mt-1 block font-mono text-xs text-(--color-ink-soft)" datetime={a.data.date.toISOString()}>
+                  {a.data.date.toLocaleDateString("en-CA")}
+                </time>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

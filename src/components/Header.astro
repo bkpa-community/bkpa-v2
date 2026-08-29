@@ -1,0 +1,108 @@
+---
+import { CATEGORIES, EMERGENCY_CATEGORIES } from "../lib/categories";
+---
+
+<header class="sticky top-0 z-40 border-b border-(--color-line) bg-(--color-paper)/90 backdrop-blur-sm">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-3 md:px-10">
+    <a class="flex items-center gap-2.5" href="/">
+      <svg class="h-8 w-8 flex-none" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <path d="M24 5c-8 0-13 7.5-13 16.5C11 33 16.5 43 24 43s13-10 13-21.5C37 12.5 32 5 24 5Z" fill="var(--color-deep)"></path>
+        <circle cx="24" cy="21" r="4.4" fill="var(--color-paper)"></circle>
+      </svg>
+      <span class="font-display text-[1.05rem] font-semibold leading-tight text-(--color-ink)">
+        BKPA Foundation
+        <small class="block font-mono text-[0.62rem] font-medium uppercase tracking-wider text-(--color-ink-soft)"
+          >Bangladesh Kidney Patient Assoc.</small
+        >
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-7 lg:flex" aria-label="Primary">
+      <a class="text-sm font-semibold hover:text-(--color-accent)" href="/">
+        <span class="i18n-bn bn">হোম</span><span class="i18n-en">Home</span>
+      </a>
+      <a class="text-sm font-semibold hover:text-(--color-accent)" href="/executive-body">
+        <span class="i18n-bn bn">কার্যনির্বাহী পরিষদ</span><span class="i18n-en">Executive Body</span>
+      </a>
+
+      <div class="group relative flex">
+        <span class="flex cursor-default items-center gap-1 text-sm font-semibold" tabindex="0">
+          <span class="i18n-bn bn">কিডনি সম্পর্কে জানুন</span><span class="i18n-en">Know Your Kidney</span>
+          <svg class="h-2.5 w-2.5 opacity-60" viewBox="0 0 20 20" fill="currentColor"><path d="M5 7l5 6 5-6z"></path></svg>
+        </span>
+        <div
+          class="invisible absolute top-full left-1/2 mt-3.5 grid w-72 -translate-x-1/2 grid-cols-1 gap-0.5 rounded-lg border border-(--color-line) bg-(--color-surface) p-2 opacity-0 shadow-xl transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
+        >
+          {
+            CATEGORIES.map((c) => (
+              <a class="rounded-md px-3 py-2 text-sm text-(--color-ink-soft) hover:bg-(--color-surface-2) hover:text-(--color-ink)" href={`/know-your-kidney/${c.slug}`}>
+                <span class="i18n-bn bn">{c.labelBn}</span>
+                <span class="i18n-en">{c.labelEn}</span>
+              </a>
+            ))
+          }
+          <a class="rounded-md px-3 py-2 text-sm text-(--color-ink-soft) hover:bg-(--color-surface-2) hover:text-(--color-ink)" href="/faq">
+            <span class="i18n-bn bn">প্রায় জিজ্ঞাসিত প্রশ্ন</span><span class="i18n-en">FAQ</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="group relative flex">
+        <span class="flex cursor-default items-center gap-1 text-sm font-semibold" tabindex="0">
+          <span class="i18n-bn bn">জরুরি যোগাযোগ</span><span class="i18n-en">Emergency Contacts</span>
+          <svg class="h-2.5 w-2.5 opacity-60" viewBox="0 0 20 20" fill="currentColor"><path d="M5 7l5 6 5-6z"></path></svg>
+        </span>
+        <div
+          class="invisible absolute top-full left-1/2 mt-3.5 grid w-64 -translate-x-1/2 grid-cols-1 gap-0.5 rounded-lg border border-(--color-line) bg-(--color-surface) p-2 opacity-0 shadow-xl transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
+        >
+          {
+            EMERGENCY_CATEGORIES.map((c) => (
+              <a class="rounded-md px-3 py-2 text-sm text-(--color-ink-soft) hover:bg-(--color-surface-2) hover:text-(--color-ink)" href={`/emergency-contacts/${c.slug}`}>
+                <span class="i18n-bn bn">{c.labelBn}</span>
+                <span class="i18n-en">{c.labelEn}</span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <a class="text-sm font-semibold hover:text-(--color-accent)" href="/contact">
+        <span class="i18n-bn bn">যোগাযোগ</span><span class="i18n-en">Contact Us</span>
+      </a>
+    </nav>
+
+    <div class="flex items-center gap-2.5">
+      <div class="flex overflow-hidden rounded-full border border-(--color-line) font-mono text-xs font-semibold" role="group" aria-label="Language">
+        <button type="button" data-lang-btn="bn" class="px-3 py-1.5 text-(--color-ink-soft) aria-pressed:bg-(--color-deep) aria-pressed:text-(--color-deep-ink)">বাংলা</button>
+        <button type="button" data-lang-btn="en" class="px-3 py-1.5 text-(--color-ink-soft) aria-pressed:bg-(--color-deep) aria-pressed:text-(--color-deep-ink)">EN</button>
+      </div>
+      <button
+        id="mobile-toggle"
+        class="inline-flex rounded-md border border-(--color-line) p-2 lg:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="Toggle menu"
+      >
+        <svg class="h-4.5 w-4.5" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 10h14M3 15h14"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-nav" class="hidden border-t border-(--color-line) px-6 pb-4 [&.open]:block lg:!hidden">
+    <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href="/"><span class="i18n-bn bn">হোম</span><span class="i18n-en">Home</span></a>
+    <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href="/executive-body"><span class="i18n-bn bn">কার্যনির্বাহী পরিষদ</span><span class="i18n-en">Executive Body</span></a>
+    <p class="pt-3 font-mono text-[0.68rem] tracking-wider text-(--color-ink-soft) uppercase"><span class="i18n-bn bn">কিডনি সম্পর্কে জানুন</span><span class="i18n-en">Know Your Kidney</span></p>
+    {CATEGORIES.map((c) => (
+      <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href={`/know-your-kidney/${c.slug}`}>
+        <span class="i18n-bn bn">{c.labelBn}</span><span class="i18n-en">{c.labelEn}</span>
+      </a>
+    ))}
+    <p class="pt-3 font-mono text-[0.68rem] tracking-wider text-(--color-ink-soft) uppercase"><span class="i18n-bn bn">জরুরি যোগাযোগ</span><span class="i18n-en">Emergency Contacts</span></p>
+    {EMERGENCY_CATEGORIES.map((c) => (
+      <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href={`/emergency-contacts/${c.slug}`}>
+        <span class="i18n-bn bn">{c.labelBn}</span><span class="i18n-en">{c.labelEn}</span>
+      </a>
+    ))}
+    <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href="/contact"><span class="i18n-bn bn">যোগাযোগ</span><span class="i18n-en">Contact Us</span></a>
+  </div>
+</header>

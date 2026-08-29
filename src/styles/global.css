@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", "Tiro Bangla", ui-serif, Georgia, serif;
+  --font-body: "Source Sans 3", "Hind Siliguri", ui-sans-serif, system-ui, sans-serif;
+  --font-bn-display: "Tiro Bangla", "Fraunces", serif;
+  --font-bn-body: "Hind Siliguri", "Source Sans 3", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --color-ink: #172420;
+  --color-ink-soft: #48584f;
+  --color-paper: #eff2ea;
+  --color-surface: #fbfbf5;
+  --color-surface-2: #e5e9dd;
+  --color-deep: #123a3e;
+  --color-deep-ink: #e9f1ef;
+  --color-accent: #a6402b;
+  --color-accent-ink: #fbede8;
+  --color-accent-2: #c08a2e;
+  --color-line: #d7d2bf;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-ink: #ece9dd;
+    --color-ink-soft: #b9c2b4;
+    --color-paper: #101715;
+    --color-surface: #182421;
+    --color-surface-2: #20302b;
+    --color-deep: #7fb6b4;
+    --color-deep-ink: #0d1b19;
+    --color-accent: #e58467;
+    --color-accent-ink: #2b1712;
+    --color-accent-2: #e3ae58;
+    --color-line: #2c3830;
+  }
+}
+:root[data-theme="dark"] {
+  --color-ink: #ece9dd;
+  --color-ink-soft: #b9c2b4;
+  --color-paper: #101715;
+  --color-surface: #182421;
+  --color-surface-2: #20302b;
+  --color-deep: #7fb6b4;
+  --color-deep-ink: #0d1b19;
+  --color-accent: #e58467;
+  --color-accent-ink: #2b1712;
+  --color-accent-2: #e3ae58;
+  --color-line: #2c3830;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+.bn {
+  font-family: var(--font-bn-display);
+}
+.bn-body {
+  font-family: var(--font-bn-body);
+}
+
+[data-lang="bn"] .i18n-en {
+  display: none;
+}
+[data-lang="en"] .i18n-bn {
+  display: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Prose styling for article/emergency-contact bodies rendered from markdown */
+.prose-bkpa {
+  max-width: 42rem;
+  color: var(--color-ink);
+  line-height: 1.75;
+}
+.prose-bkpa h1,
+.prose-bkpa h2,
+.prose-bkpa h3,
+.prose-bkpa h4 {
+  font-family: var(--font-display);
+  color: var(--color-deep);
+  margin-top: 1.6em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+.prose-bkpa p {
+  margin-block: 1em;
+}
+.prose-bkpa ul,
+.prose-bkpa ol {
+  margin-block: 1em;
+  padding-inline-start: 1.4em;
+}
+.prose-bkpa li {
+  margin-block: 0.35em;
+}
+.prose-bkpa a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose-bkpa strong {
+  color: var(--color-ink);
+}
+.prose-bkpa blockquote {
+  border-left: 3px solid var(--color-accent-2);
+  padding-left: 1em;
+  color: var(--color-ink-soft);
+  font-style: italic;
+  margin-block: 1.2em;
+}
+.prose-bkpa hr {
+  border: none;
+  border-top: 1px solid var(--color-line);
+  margin-block: 2em;
+}
