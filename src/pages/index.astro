@@ -9,6 +9,7 @@ const [featured, ...rest] = home.banners;
 
 const articles = await getCollection("articles", (a) => !a.data.draft);
 const countFor = (slug: string) => articles.filter((a) => a.id.startsWith(`${slug}/`)).length;
+const photos = (await getCollection("gallery")).sort((a, b) => a.data.order - b.data.order);
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 ---
@@ -149,6 +150,33 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       </div>
     </div>
   </section>
+
+  <!-- ============ GALLERY ============ -->
+  {photos.length > 0 && (
+    <section class="py-14">
+      <div class="mx-auto max-w-6xl px-6 md:px-10">
+        <div class="mb-8 max-w-xl">
+          <p class="font-mono text-[0.72rem] tracking-wider text-(--color-ink-soft) uppercase"><span class="i18n-bn bn">ছবিঘর</span><span class="i18n-en">Gallery</span></p>
+          <h2 class="mt-1.5 font-display text-[clamp(1.5rem,3vw,2rem)] font-semibold text-(--color-ink)"><span class="i18n-bn bn">আমাদের কার্যক্রম</span><span class="i18n-en">Our Activities</span></h2>
+        </div>
+        <div class="grid grid-cols-2 gap-3.5 sm:grid-cols-3 lg:grid-cols-4">
+          {photos.map((p) => (
+            <figure class="group overflow-hidden rounded-lg border border-(--color-line) bg-(--color-surface)">
+              <div class="aspect-square overflow-hidden">
+                <img
+                  class="h-full w-full object-cover transition group-hover:scale-105"
+                  src={encodeURI(`${base}${p.data.image}`)}
+                  alt={p.data.caption}
+                  loading="lazy"
+                />
+              </div>
+              {p.data.caption && <figcaption class="p-2.5 text-xs text-(--color-ink-soft)">{p.data.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- ============ TEASERS ============ -->
   <section class="py-14">

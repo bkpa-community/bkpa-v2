@@ -49,6 +49,18 @@ const team = defineCollection({
 });
 
 // ---------------------------------------------------------------------------
+// Homepage activity gallery.
+// ---------------------------------------------------------------------------
+const gallery = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/gallery" }),
+  schema: z.object({
+    order: z.number().default(99),
+    caption: z.string().optional().default(""),
+    image: z.string(),
+  }),
+});
+
+// ---------------------------------------------------------------------------
 // Singleton site pages (home banners/notice, about, FAQ, contact) — each
 // stored as its own small JSON file (a one-entry map) so Sitepins renders
 // them as structured forms.
@@ -95,4 +107,4 @@ const siteContact = defineCollection({
   }),
 });
 
-export const collections = { articles, emergencyContacts, team, siteHome, siteAbout, siteFaq, siteContact };
+export const collections = { articles, emergencyContacts, team, gallery, siteHome, siteAbout, siteFaq, siteContact };
