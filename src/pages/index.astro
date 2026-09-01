@@ -46,12 +46,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       </div>
 
       <div class="relative mx-auto aspect-square w-full max-w-md">
-        <svg viewBox="0 0 400 400" class="h-full w-full">
-          <path d="M200 40c-70 0-120 62-120 138 0 96 48 172 120 172s120-76 120-172C320 102 270 40 200 40Z" fill="var(--color-surface-2)"></path>
-          <path d="M200 40c-70 0-120 62-120 138 0 96 48 172 120 172" fill="none" stroke="var(--color-deep)" stroke-width="2" opacity=".5"></path>
-          <path d="M162 150c0-30 20-52 44-52s44 26 44 58-18 46-40 46c-14 0-22-8-22-20 0-14 12-20 26-16" fill="none" stroke="var(--color-deep)" stroke-width="6" stroke-linecap="round"></path>
-          <circle cx="200" cy="150" r="7" fill="var(--color-accent-2)"></circle>
-        </svg>
+        <img
+          class="h-full w-full object-contain"
+          src={`${base}/images/hero-kidney-illustration.png`}
+          alt="Line illustration of two kidneys"
+          width="1000"
+          height="1000"
+        />
         <div class="absolute bottom-[-1.1rem] left-1/2 flex w-max max-w-[92%] -translate-x-1/2 items-center gap-2.5 rounded-lg border border-(--color-line) bg-(--color-surface) px-4.5 py-3 shadow-xl">
           <span class="h-2.5 w-2.5 flex-none rounded-full bg-(--color-accent-2)"></span>
           <div>
