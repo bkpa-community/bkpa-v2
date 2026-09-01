@@ -1,7 +1,25 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+function excerpt(markdown: string, maxLength = 140) {
+  const plain = markdown
+    .replace(/^#+\s*/gm, "")
+    .replace(/\*\*(.*?)\*\*/g, "$1")
+    .replace(/\*(.*?)\*/g, "$1")
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/[*_>`~#]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  return plain.length > maxLength ? `${plain.slice(0, maxLength).trim()}...` : plain;
+}
+
+const allArticles = await getCollection("articles", (a) => !a.data.draft);
+const articleByHref = new Map(
+  allArticles.map((a) => [`${base}/know-your-kidney/${a.id}`, a])
+);
 
 const STEPS = [
   {
@@ -159,6 +177,24 @@ const TOPICS: Record<string, { bn: string; en: string; desc: { bn: string; en: s
   },
 };
 
+for (const topic of Object.values(TOPICS)) {
+  for (const link of topic.links as any[]) {
+    const article = articleByHref.get(link.href);
+    if (article) {
+      const ex = excerpt(article.body ?? "");
+      link.title = article.data.title;
+      link.excerptBn = ex;
+      link.excerptEn = ex;
+      link.image = article.data.image ? encodeURI(`${base}${article.data.image}`) : null;
+    } else {
+      link.title = null;
+      link.excerptBn = topic.desc.bn;
+      link.excerptEn = topic.desc.en;
+      link.image = null;
+    }
+  }
+}
+
 const PERSONA_INTRO: Record<string, { en: string; bn: string }> = {
   patient: { en: "As a kidney patient, here's what might help:", bn: "আপনি একজন কিডনি রোগী হিসেবে, নিচের বিষয়গুলো আপনার জন্য সহায়ক হতে পারে:" },
   caregiver: { en: "As a caregiver, here's what might help:", bn: "আপনি একজন কেয়ারগিভার হিসেবে, নিচের বিষয়গুলো আপনার জন্য সহায়ক হতে পারে:" },
@@ -184,7 +220,7 @@ const DATA = { STEPS, TOPICS, PERSONA_INTRO };
   </section>
 
   <section class="py-12">
-    <div class="mx-auto max-w-3xl px-6 md:px-10">
+    <div class="mx-auto max-w-4xl px-6 md:px-10">
       <p id="fh-progress" class="font-mono text-xs tracking-wider text-(--color-ink-soft) uppercase"></p>
 
       <div id="fh-question" class="mt-4">
@@ -201,7 +237,7 @@ const DATA = { STEPS, TOPICS, PERSONA_INTRO };
       <!-- Results -->
       <div id="fh-results" class="mt-4 hidden">
         <p id="fh-results-intro" class="text-(--color-ink-soft)"></p>
-        <div id="fh-results-list" class="mt-5 flex flex-col gap-3"></div>
+        <div id="fh-results-list" class="mt-5 grid gap-6 sm:grid-cols-2"></div>
         <button type="button" id="fh-restart" class="mt-6 font-mono text-xs tracking-wider text-(--color-ink-soft) uppercase hover:text-(--color-deep)">
           ↻ <span class="i18n-bn bn">আবার শুরু করুন</span><span class="i18n-en">Start over</span>
         </button>
@@ -430,10 +466,22 @@ const DATA = { STEPS, TOPICS, PERSONA_INTRO };
     const listEl = document.getElementById("fh-results-list");
     listEl.innerHTML = "";
     (topic?.links || []).forEach((link) => {
+      const cardTitle = link.title || t(link);
+      const cardExcerpt = lang() === "en" ? link.excerptEn : link.excerptBn;
       const a = document.createElement("a");
       a.href = link.href;
-      a.className = "flex items-center justify-between gap-3 rounded-lg border border-(--color-line) bg-(--color-surface) p-4 hover:border-(--color-deep)";
-      a.innerHTML = `<span class="text-sm font-semibold">${t(link)}</span><span aria-hidden="true">→</span>`;
+      a.className = "group flex flex-col overflow-hidden rounded-lg border border-(--color-line) bg-(--color-surface) hover:border-(--color-deep)";
+      a.innerHTML = `
+        ${link.image ? `
+          <div class="aspect-video overflow-hidden bg-(--color-surface-2)">
+            <img class="h-full w-full object-cover transition group-hover:scale-105" src="${link.image}" alt="" loading="lazy" width="640" height="360" />
+          </div>
+        ` : ""}
+        <div class="flex flex-1 flex-col p-5">
+          <h3 class="font-display text-[1.05rem] font-semibold leading-snug">${cardTitle}</h3>
+          ${cardExcerpt ? `<p class="mt-2 line-clamp-3 flex-1 text-sm text-(--color-ink-soft)">${cardExcerpt}</p>` : ""}
+        </div>
+      `;
       listEl.appendChild(a);
     });
     resultsEl.dataset.topic = topicId;
@@ -446,7 +494,13 @@ const DATA = { STEPS, TOPICS, PERSONA_INTRO };
     render();
   });
 
-  render();
+  const presetRole = new URLSearchParams(window.location.search).get("role");
+  if (presetRole && STEPS[0].options.some((o) => o.value === presetRole)) {
+    profile.role = presetRole;
+    advance();
+  } else {
+    render();
+  }
 
   const pageEl = document.getElementById("page");
   if (pageEl) {
