@@ -8,13 +8,13 @@ const contact = (await getEntry("siteContact", "main"))!.data;
 <BaseLayout title="Contact" description={contact.title}>
   <section class="py-12">
     <div class="mx-auto max-w-3xl px-6 md:px-10">
-      <p class="font-mono text-[0.72rem] tracking-wider text-(--color-ink-soft) uppercase"><span class="i18n-bn bn">যোগাযোগ</span><span class="i18n-en">Contact Us</span></p>
-      <h1 class="mt-1.5 font-display text-[clamp(1.8rem,4vw,2.6rem)] font-semibold text-(--color-ink)">{contact.title}</h1>
+      <p class="text-eyebrow text-(--color-ink-soft)"><span class="i18n-bn bn">যোগাযোগ</span><span class="i18n-en">Contact Us</span></p>
+      <h1 class="mt-1.5 text-display-2 text-(--color-ink)">{contact.title}</h1>
 
       <div class="mt-9 grid gap-4 sm:grid-cols-2">
         {contact.items.map((item) => (
           <div class="rounded-lg border border-(--color-line) bg-(--color-surface) p-5">
-            <h2 class="font-mono text-[0.7rem] tracking-wider text-(--color-ink-soft) uppercase">{item.name}</h2>
+            <h2 class="text-eyebrow text-(--color-ink-soft)">{item.name}</h2>
             <p class="mt-2 whitespace-pre-line text-sm">{item.content}</p>
           </div>
         ))}

@@ -21,8 +21,8 @@ let prevGroup: string | undefined;
 <BaseLayout title={entry.data.title} description={`Emergency contact list — ${entry.data.title}, BKPA Foundation`}>
   <section class="bg-(--color-deep) py-10 text-(--color-deep-ink)">
     <div class="mx-auto max-w-5xl px-6 md:px-10">
-      <p class="font-mono text-[0.72rem] tracking-wider opacity-75 uppercase"><span class="i18n-bn bn">জরুরি যোগাযোগ</span><span class="i18n-en">Emergency Contacts</span></p>
-      <h1 class="mt-1.5 font-display text-[clamp(1.7rem,3.6vw,2.4rem)] font-semibold">
+      <p class="text-eyebrow opacity-75"><span class="i18n-bn bn">জরুরি যোগাযোগ</span><span class="i18n-en">Emergency Contacts</span></p>
+      <h1 class="mt-1.5 text-display-2">
         <span class="i18n-en">{meta?.labelEn ?? entry.data.title}</span>
         <span class="i18n-bn bn block">{meta?.labelBn}</span>
       </h1>
@@ -60,7 +60,7 @@ let prevGroup: string | undefined;
                 <div class="flex gap-4 rounded-lg border border-(--color-line) bg-(--color-surface) p-5">
                   <InitialsAvatar name={item.name} class="h-12 w-12 text-sm" />
                   <div class="min-w-0">
-                    <h3 class="font-display text-[1rem] font-semibold">{item.name}</h3>
+                    <h3 class="text-display-4">{item.name}</h3>
                     {item.role && <p class="mt-0.5 text-sm text-(--color-ink-soft)">{item.role}</p>}
                     {item.address && <p class="mt-1.5 text-sm text-(--color-ink-soft)">{item.address}</p>}
                     <div class="mt-2 flex flex-col gap-0.5 font-mono text-xs text-(--color-ink-soft)">

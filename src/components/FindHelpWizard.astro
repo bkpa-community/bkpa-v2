@@ -208,7 +208,7 @@ const DATA = { STEPS, TOPICS, PERSONA_INTRO };
   <p id="fh-progress" class="font-mono text-xs tracking-wider text-(--color-ink-soft) uppercase"></p>
 
   <div id="fh-question" class="mt-4">
-    <h2 id="fh-question-title" class="font-display text-[1.3rem] font-semibold"></h2>
+    <h2 id="fh-question-title" class="text-display-4"></h2>
     <div id="fh-options" class="mt-5 grid gap-3.5 sm:grid-cols-2"></div>
     <button type="button" id="fh-multi-next" class="mt-5 hidden rounded-md bg-(--color-deep) px-5 py-2.5 text-sm font-semibold text-(--color-deep-ink) hover:brightness-110">
       <span class="i18n-bn bn">পরবর্তী</span><span class="i18n-en">Next</span> →
@@ -460,7 +460,7 @@ const DATA = { STEPS, TOPICS, PERSONA_INTRO };
           </div>
         ` : ""}
         <div class="flex flex-1 flex-col p-5">
-          <h3 class="font-display text-[1.05rem] font-semibold leading-snug">${cardTitle}</h3>
+          <h3 class="text-display-4 leading-snug">${cardTitle}</h3>
           ${cardExcerpt ? `<p class="mt-2 line-clamp-3 flex-1 text-sm text-(--color-ink-soft)">${cardExcerpt}</p>` : ""}
         </div>
       `;
