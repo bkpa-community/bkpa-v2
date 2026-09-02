@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import SearchModal from "../components/SearchModal.astro";
 import "../styles/global.css";
 import { organizationSchema } from "../lib/schema";
 
@@ -68,6 +69,7 @@ const schemaBlocks = [organizationSchema(), ...(schema ? (Array.isArray(schema) 
       <slot />
     </main>
     <Footer />
+    <SearchModal />
     <script>
       const page = document.getElementById("page")!;
       const saved = (() => {
