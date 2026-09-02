@@ -2,9 +2,10 @@
 interface Props {
   name: string;
   class?: string;
+  shape?: "circle" | "block";
 }
 
-const { name, class: className = "h-16 w-16 text-lg" } = Astro.props;
+const { name, class: className = "h-16 w-16 text-lg", shape = "circle" } = Astro.props;
 
 const TITLE_PREFIXES = [
   "ডক্টর",
@@ -41,6 +42,8 @@ function initialsFor(raw: string) {
 const initials = initialsFor(name);
 ---
 
-<span class={`inline-flex flex-none items-center justify-center rounded-full bg-(--color-deep) font-display font-semibold text-(--color-deep-ink) ${className}`}>
+<span
+  class={`inline-flex items-center justify-center bg-(--color-deep) font-display font-semibold text-(--color-deep-ink) ${shape === "block" ? "" : "flex-none rounded-full"} ${className}`}
+>
   {initials}
 </span>
