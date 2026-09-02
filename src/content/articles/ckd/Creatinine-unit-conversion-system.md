@@ -8,7 +8,7 @@ draft: true
 
 ### Creatinine Unit Conversion System.
 
-🎗 এটি ছোট একটা বিষয় কিন্তু গুরুত্বপূর্ণ 🎗
+- এটি ছোট একটা বিষয় কিন্তু গুরুত্বপূর্ণ
 
 ■ creatinine রিপোর্ট দেওয়ার সময় দেখবেন বলা থাকে creatinine লেভেল 1.2 mg/dl বা আবার কোনো কোনো ল্যাব বা ডায়াগনস্টিক এ creatinine এর লেভেল লেখা থাকে 106 umol/L.
 
@@ -21,7 +21,7 @@ draft: true
 
 ধন্যবাদ.
 
-✳ MD.Abul Bashar Siddique(shohag) ✳
+- MD.Abul Bashar Siddique(shohag)
 
 **ⒸBKPA\_Foundation**
 
