@@ -25,10 +25,30 @@ const STEPS = [
     key: "role",
     q: { bn: "আপনি কে?", en: "I am a..." },
     options: [
-      { value: "patient", bn: "আমি কিডনি রোগী", en: "Kidney Patient" },
-      { value: "caregiver", bn: "পরিবারের সদস্য / কেয়ারগিভার", en: "Family / Caregiver" },
-      { value: "at_risk", bn: "ঝুঁকিপূর্ণ (ডায়াবেটিস/BP আছে)", en: "At Risk (Diabetes/BP)" },
-      { value: "general", bn: "সাধারণ জিজ্ঞাসা", en: "Just Learning" },
+      {
+        value: "patient",
+        bn: "আমি কিডনি রোগী",
+        en: "Kidney Patient",
+        icon: '<circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"></path>',
+      },
+      {
+        value: "caregiver",
+        bn: "পরিবারের সদস্য / কেয়ারগিভার",
+        en: "Family / Caregiver",
+        icon: '<circle cx="8" cy="7" r="3.2"></circle><circle cx="17" cy="8.5" r="2.6"></circle><path d="M2.5 21c0-3.9 2.9-7 6-7s5.5 2.4 5.9 5.6"></path><path d="M13.5 15.5c2.4.1 4.5 2.2 5 5.5"></path>',
+      },
+      {
+        value: "at_risk",
+        bn: "ঝুঁকিপূর্ণ (ডায়াবেটিস/BP আছে)",
+        en: "At Risk (Diabetes/BP)",
+        icon: '<path d="M12 21s-7.5-4.6-9.7-9.3C.6 8.2 2.3 4.7 5.7 4.1c2-.4 3.9.5 5 2.1a1 1 0 0 0 1.5 0c1.1-1.6 3-2.5 5-2.1 3.4.6 5.1 4.1 3.4 7.6C19.5 16.4 12 21 12 21Z"></path><path d="M8 12h2.2l1.3-2.4 1.6 4.4L14.4 12H17"></path>',
+      },
+      {
+        value: "general",
+        bn: "সাধারণ জিজ্ঞাসা",
+        en: "Just Learning",
+        icon: '<path d="M4 5.5C4 4.7 4.7 4 5.5 4H12v16H5.5A1.5 1.5 0 0 1 4 18.5v-13Z"></path><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H12v16h6.5a1.5 1.5 0 0 0 1.5-1.5v-13Z"></path>',
+      },
     ],
   },
   {
@@ -374,8 +394,15 @@ const DATA = { STEPS, TOPICS, PERSONA_INTRO };
       step.options.forEach((opt) => {
         const btn = document.createElement("button");
         btn.type = "button";
-        btn.className = "fh-option rounded-lg border border-(--color-line) bg-(--color-surface) p-4 text-left text-sm font-semibold hover:border-(--color-deep)";
-        btn.textContent = t(opt);
+        btn.className = "fh-option flex items-center gap-3 rounded-lg border border-(--color-line) bg-(--color-surface) p-4 text-left text-sm font-semibold hover:border-(--color-deep)";
+        if (opt.icon) {
+          btn.innerHTML = `
+            <svg class="h-6 w-6 flex-none text-(--color-deep)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${opt.icon}</svg>
+            <span>${t(opt)}</span>
+          `;
+        } else {
+          btn.textContent = t(opt);
+        }
         btn.addEventListener("click", () => {
           profile[step.key] = opt.value;
           advance();
