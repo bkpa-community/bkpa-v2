@@ -76,11 +76,3 @@ image: /images/_.webp
 সর্বোপরি BK ভাইরাস মোকাবিলার জন্য জন্য রুটিন স্ক্রীনিংবা টেস্টের বিকল্পও নাই । ইমিউনোসপ্রেশন ওষুধের মাত্রা হ্রাস করে BK নেফ্রোপ্যাথি চিকিৎসার  এখন পর্যন্ত মূল ভিত্তি। তাই একটি অভিজ্ঞ নেফ্রলোজিসট এর অধীনে থেকে এ ভাইরাস মোকাবিলা করা উচিত।
 
 **ⒸBKPA**
-
-##### **Caution:**
-
-> ###### **BKPA is a voluntary social organization whose mission is to raise awareness, promote and share knowledge about kidney disease. BKPA does not provide any kind of medical advice directly or indirectly through social media or any other platform which should only be done by the nephrologist or registered doctor. This is prohibited to take any kind of medical treatment based on the information provided by BKPA.**
-
-##### **সতর্কতাঃ**
-
-> ###### **বিকেপিএ একটি স্বেচ্ছাসেবী সামাজিক সংগঠন যার লক্ষ্য কিডনি রোগ সম্পর্কে সামাজিক সচেতনতা বৃদ্ধি,প্রচার এবং সতর্ক করা। বিকেপিএতে সামাজিক মাধ্যম অথবা অন্য কোন মাধ্যম ব্যবহার করে বা সরাসরি প্রত্যক্ষ / পরোক্ষভাবে কোনো প্রকার চিকিৎসা সংক্রান্ত সেবা বা পরামর্শ প্রদান করা হয় না যা শুধুমাত্র আপনার নেফ্রোলজিস্ট এবং রেজিস্টার্ড চিকিৎসকের এখতিয়ার।বিকেপিএ প্রদত্ত তথ্যের উপর ভিত্তি করে কোন প্রকার চিকিৎসা গ্রহণ নিষিদ্ধ।**

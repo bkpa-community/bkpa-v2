@@ -108,11 +108,3 @@ Anti-T-cell থেরাপিএস : T-cell depleting agents যেমন- Ant
 💥**proteinuria** নিয়ে লিংক এর লেখাতে যে ট্রিটমেন্ট প্ল্যান গুলো উল্লেখ আছে সেই ট্রিটমেন্ট প্ল্যান গুলো proteinurea কমায় তবে একেবারে বন্ধ নাও হতে পারে তাই লেখার শুরুতে বলা আছে অমীমাংসিত এবং জটিল যা ক্রনিক কিডনি রোগের মূল সমস্যা.ডাক্তাররা এই ট্রিটমেন্ট প্ল্যান থেকে ওষুধ পছন্দ করে আপনাকে proteinurea কমিয়ে ক্রনিক কিডনি রোগকে স্লো বা ধীর করতে পারে যাতে ভবিষ্যতে অনেক সময় লাগে শেষ স্টেজ এ কিডনি রোগ পৌঁছতে .অধিকাংশ ক্ষেত্রে এই ওষুধগুলো proteinurea কমায় কিন্তু সেটা ক্রনিক হলে proteinurea রেঞ্জ এ আসে না খুব রেয়ার কেস ছাড়া.আবার একটা ট্রিটমেন্ট প্ল্যান না কাজ করলে অনেকসময় আরেক গ্রুপ এর ওষুধ দিয়ে দেখে আরো কমে কিনা বা কম্বিনেশন দিতে পারে যা নেফ্রোলজিস্ট এর কাজ এবং সময়সাপেক্ষ ,তাই ক্রনিক কিডনি রোগী/Proteinurea এর রোগী সবসময় নেফ্রোলজিস্ট এর তীক্ষ্ণ নজরদারিতে থাকতে হয় বা থাকা উচিত .
 
 ⒸBKPA
-
-##### **Caution:**
-
-> **BKPA is a voluntary social organization whose mission is to raise awareness, promote and share knowledge about kidney disease. BKPA does not provide any kind of medical advice directly or indirectly through social media or any other platform which should only be done by the nephrologist or registered doctor. This is prohibited to take any kind of medical treatment based on the information provided by BKPA.**
-
-##### **সতর্কতাঃ**
-
-> **বিকেপিএ একটি স্বেচ্ছাসেবী সামাজিক সংগঠন যার লক্ষ্য কিডনি রোগ সম্পর্কে সামাজিক সচেতনতা বৃদ্ধি,প্রচার এবং সতর্ক করা। বিকেপিএতে সামাজিক মাধ্যম অথবা অন্য কোন মাধ্যম ব্যবহার করে বা সরাসরি প্রত্যক্ষ / পরোক্ষভাবে কোনো প্রকার চিকিৎসা সংক্রান্ত সেবা বা পরামর্শ প্রদান করা হয় না যা শুধুমাত্র আপনার নেফ্রোলজিস্ট এবং রেজিস্টার্ড চিকিৎসকের এখতিয়ার।বিকেপিএ প্রদত্ত তথ্যের উপর ভিত্তি করে কোন প্রকার চিকিৎসা গ্রহণ নিষিদ্ধ।**
