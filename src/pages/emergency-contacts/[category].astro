@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import InitialsAvatar from "../../components/InitialsAvatar.astro";
 import { getCollection, render } from "astro:content";
 import { EMERGENCY_CATEGORIES } from "../../lib/categories";
+import { breadcrumbSchema } from "../../lib/schema";
 
 export async function getStaticPaths() {
   const all = await getCollection("emergencyContacts");
@@ -16,9 +17,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const items = entry.data.items ?? [];
 
 let prevGroup: string | undefined;
+
+const pageSchema = breadcrumbSchema([
+  { name: "Home", path: "/" },
+  { name: "Emergency Contacts", path: "/emergency-contacts" },
+  { name: meta?.labelEn ?? entry.data.title, path: `/emergency-contacts/${entry.id}` },
+]);
 ---
 
-<BaseLayout title={entry.data.title} description={`Emergency contact list — ${entry.data.title}, BKPA Foundation`}>
+<BaseLayout title={entry.data.title} description={`Emergency contact list — ${entry.data.title}, BKPA Foundation`} schema={pageSchema}>
   <section class="bg-(--color-deep) py-10 text-(--color-deep-ink)">
     <div class="mx-auto max-w-5xl px-6 md:px-10">
       <p class="text-eyebrow opacity-75"><span class="i18n-bn bn">জরুরি যোগাযোগ</span><span class="i18n-en">Emergency Contacts</span></p>

@@ -2,13 +2,18 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { EMERGENCY_CATEGORIES } from "../../lib/categories";
+import { breadcrumbSchema } from "../../lib/schema";
 
 const all = await getCollection("emergencyContacts");
 const countFor = (slug: string) => all.find((e) => e.id === slug)?.data.items?.length ?? 0;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const pageSchema = breadcrumbSchema([
+  { name: "Home", path: "/" },
+  { name: "Emergency Contacts", path: "/emergency-contacts" },
+]);
 ---
 
-<BaseLayout title="Emergency Contacts" description="Emergency contact directory — nephrology doctors, vascular surgeons, dialysis centers, and blood banks, BKPA Foundation">
+<BaseLayout title="Emergency Contacts" description="Emergency contact directory — nephrology doctors, vascular surgeons, dialysis centers, and blood banks, BKPA Foundation" schema={pageSchema}>
   <section class="bg-(--color-deep) py-10 text-(--color-deep-ink)">
     <div class="mx-auto max-w-5xl px-6 md:px-10">
       <p class="text-eyebrow opacity-75"><span class="i18n-bn bn">তাৎক্ষণিক প্রয়োজনে</span><span class="i18n-en">When you need it now</span></p>

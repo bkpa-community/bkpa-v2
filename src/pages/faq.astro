@@ -1,11 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getEntry } from "astro:content";
+import { faqPageSchema } from "../lib/schema";
 
 const faq = (await getEntry("siteFaq", "main"))!.data;
+const pageSchema = faqPageSchema(faq.items);
 ---
 
-<BaseLayout title="FAQ" description={faq.title}>
+<BaseLayout title="FAQ" description={faq.title} schema={pageSchema}>
   <section class="py-12">
     <div class="mx-auto max-w-3xl px-6 md:px-10">
       <p class="text-eyebrow text-(--color-ink-soft)"><span class="i18n-bn bn">প্রায় জিজ্ঞাসিত প্রশ্ন</span><span class="i18n-en">FAQ</span></p>

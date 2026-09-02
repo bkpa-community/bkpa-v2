@@ -2,17 +2,20 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
+import { organizationSchema } from "../lib/schema";
 
 interface Props {
   title: string;
   description?: string;
+  schema?: object | object[];
 }
-const { title, description = "Bangladesh Kidney Patient Association (BKPA) Foundation" } = Astro.props;
+const { title, description = "Bangladesh Kidney Patient Association (BKPA) Foundation", schema } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const pageTitle = `${title} · BKPA Foundation`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL(`${base}/images/logo.png`, Astro.site);
+const schemaBlocks = [organizationSchema(), ...(schema ? (Array.isArray(schema) ? schema : [schema]) : [])];
 ---
 
 <!doctype html>
@@ -36,6 +39,8 @@ const ogImageURL = new URL(`${base}/images/logo.png`, Astro.site);
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
+
+    {schemaBlocks.map((block) => <script type="application/ld+json" is:inline set:html={JSON.stringify(block).replace(/</g, "\\u003c")} />)}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

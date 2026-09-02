@@ -3,6 +3,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import CategoryIcon from "../../../components/CategoryIcon.astro";
 import { getCollection } from "astro:content";
 import { CATEGORIES, categoryBySlug } from "../../../lib/categories";
+import { collectionPageSchema, breadcrumbSchema } from "../../../lib/schema";
 
 export async function getStaticPaths() {
   return CATEGORIES.map((c) => ({ params: { category: c.slug } }));
@@ -27,9 +28,22 @@ const items = all
   .filter((a) => a.id.startsWith(`${cat.slug}/`))
   .sort((a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0));
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const pageSchema = [
+  collectionPageSchema({
+    name: cat.labelEn,
+    description: `${cat.labelEn} — articles from BKPA Foundation`,
+    path: `/know-your-kidney/${cat.slug}`,
+    items: items.map((a) => ({ name: a.data.title, path: `/know-your-kidney/${cat.slug}/${a.id.split("/").slice(1).join("/")}` })),
+  }),
+  breadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: cat.labelEn, path: `/know-your-kidney/${cat.slug}` },
+  ]),
+];
 ---
 
-<BaseLayout title={cat.labelEn} description={`${cat.labelEn} — articles from BKPA Foundation`}>
+<BaseLayout title={cat.labelEn} description={`${cat.labelEn} — articles from BKPA Foundation`} schema={pageSchema}>
   <section class="py-12">
     <div class="mx-auto max-w-6xl px-6 md:px-10">
       <p class="text-eyebrow text-(--color-ink-soft)">
