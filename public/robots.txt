@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bkpa-community.github.io/bkpa-v2/sitemap-index.xml

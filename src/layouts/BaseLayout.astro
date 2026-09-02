@@ -8,6 +8,11 @@ interface Props {
   description?: string;
 }
 const { title, description = "Bangladesh Kidney Patient Association (BKPA) Foundation" } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const pageTitle = `${title} · BKPA Foundation`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(`${base}/images/logo.png`, Astro.site);
 ---
 
 <!doctype html>
@@ -15,9 +20,22 @@ const { title, description = "Bangladesh Kidney Patient Association (BKPA) Found
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/images/favicon.png`} />
-    <title>{title} · BKPA Foundation</title>
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href={`${base}/images/favicon.png`} />
+    <link rel="canonical" href={canonicalURL} />
+    <title>{pageTitle}</title>
     <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BKPA Foundation" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -54,10 +72,14 @@ const { title, description = "Bangladesh Kidney Patient Association (BKPA) Found
           return null;
         }
       })();
-      if (saved === "en" || saved === "bn") page.setAttribute("data-lang", saved);
+      if (saved === "en" || saved === "bn") {
+        page.setAttribute("data-lang", saved);
+        document.documentElement.lang = saved;
+      }
 
       function setLang(lang: "bn" | "en") {
         page.setAttribute("data-lang", lang);
+        document.documentElement.lang = lang;
         document.querySelectorAll<HTMLButtonElement>("[data-lang-btn]").forEach((btn) => {
           btn.setAttribute("aria-pressed", String(btn.dataset.langBtn === lang));
         });
