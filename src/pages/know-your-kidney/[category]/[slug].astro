@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import ContentFeedback from "../../../components/ContentFeedback.astro";
+import OpenRemark from "../../../components/OpenRemark.astro";
 import { getCollection, render } from "astro:content";
 import { categoryBySlug } from "../../../lib/categories";
 
@@ -37,6 +38,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       </div>
       <div class="mt-10">
         <ContentFeedback />
+      </div>
+      <div class="mt-10">
+        <OpenRemark />
       </div>
     </div>
   </article>
