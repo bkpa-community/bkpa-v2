@@ -42,6 +42,9 @@ const emergencyContacts = defineCollection({
           email: z.string().optional(),
           website: z.string().optional(),
           notes: z.string().optional(),
+          // Path under public/, e.g. /images/doctors/kazi-shahnoor-alam.jpg.
+          // Optional: entries without one fall back to an initials avatar.
+          image: z.string().optional(),
         }),
       )
       .optional(),
