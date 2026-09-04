@@ -65,6 +65,7 @@ items:
   phone: '01917610346'
   group: চট্টগ্রাম
 - name: ডাঃ এম এস হায়দার রুশ্নি
+  image: /images/doctors/dr-s-m-haydar-rushni.webp
   role: ম্যাক্স হাসপাতাল, মেহেদীবাগ রোড, চট্টগ্রাম
   phone: '01855737040, 01741481632, 01815509244, 01713998199, 01797584583'
   notes: 'তিনি এভারকেয়ার চট্টগ্রামেও বসেন। Evercare Appointment & Hotline: 10663, 09612310663'
@@ -74,10 +75,12 @@ items:
   phone: '01842719931, 01814651073'
   group: চট্টগ্রাম
 - name: ডাঃ সত্যজিৎ রায়
+  image: /images/doctors/dr-shattojit-roy.png
   role: ম্যাক্স হাসপাতাল, মেহেদীবাগ রোড, চট্টগ্রাম
   phone: '01815509244, 01713998199, 01797584583'
   group: চট্টগ্রাম
 - name: ডাঃ রতন সাহা
+  image: /images/doctors/dr-ratan-kanti-saha.webp
   role: ম্যাক্স হাসপাতাল, মেহেদীবাগ রোড, চট্টগ্রাম
   phone: '01819391368, 01713998199, 01797584583'
   group: চট্টগ্রাম
