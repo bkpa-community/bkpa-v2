@@ -75,7 +75,7 @@ items:
   phone: '01842719931, 01814651073'
   group: চট্টগ্রাম
 - name: ডাঃ সত্যজিৎ রায়
-  image: /images/doctors/dr-shattojit-roy.png
+  image: /images/doctors/dr-shattojit-roy.webp
   role: ম্যাক্স হাসপাতাল, মেহেদীবাগ রোড, চট্টগ্রাম
   phone: '01815509244, 01713998199, 01797584583'
   group: চট্টগ্রাম
