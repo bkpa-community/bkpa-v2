@@ -44,7 +44,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
         <li><a class="text-sm hover:text-(--color-deep)" href={`${base}/executive-body`}><span class="i18n-bn bn">কার্যনির্বাহী পরিষদ</span><span class="i18n-en">Executive Body</span></a></li>
         <li><a class="text-sm hover:text-(--color-deep)" href="https://www.facebook.com/groups/bkpafoundation" target="_blank" rel="noopener">Facebook</a></li>
         <li><a class="text-sm hover:text-(--color-deep)" href={`${base}/contact`}><span class="i18n-bn bn">যোগাযোগ</span><span class="i18n-en">Contact</span></a></li>
-        <li><a class="text-sm hover:text-(--color-deep)" href={`${base}/legal`}><span class="i18n-bn bn">আইন ও সম্মতি</span><span class="i18n-en">Legal & Compliance</span></a></li>
       </ul>
     </div>
   </div>
@@ -53,7 +52,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       <span
         >© {new Date().getFullYear()} BKPA Foundation.<span class="i18n-bn bn"> সর্বস্বত্ব সংরক্ষিত।</span><span class="i18n-en"> All rights reserved.</span></span
       >
-      <a class="underline" href="https://mehedisharif.com" target="_blank" rel="noopener">Developed by Mehedi</a>
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+        <a class="hover:text-(--color-deep) hover:underline" href={`${base}/legal`}>
+          <span class="i18n-bn bn">আইন ও সম্মতি</span><span class="i18n-en">Legal & Compliance</span>
+        </a>
+        <a class="underline" href="https://mehedisharif.com" target="_blank" rel="noopener">Developed by Mehedi</a>
+      </div>
     </div>
   </div>
 </footer>
