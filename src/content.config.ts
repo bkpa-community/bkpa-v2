@@ -45,6 +45,9 @@ const emergencyContacts = defineCollection({
           // Path under public/, e.g. /images/doctors/kazi-shahnoor-alam.jpg.
           // Optional: entries without one fall back to an initials avatar.
           image: z.string().optional(),
+          // Display order within a group — lower shows first. Entries without
+          // a rank keep their file order and sit after the ranked ones.
+          rank: z.number().optional(),
         }),
       )
       .optional(),
