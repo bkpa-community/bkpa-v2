@@ -65,15 +65,15 @@ const pageSchema = breadcrumbSchema([
                   <h2 class="col-span-full mt-2 font-mono text-xs font-semibold tracking-wider text-(--color-ink-soft) uppercase first:mt-0">{item.group}</h2>
                 )}
                 <div class="flex flex-col overflow-hidden rounded-lg border border-(--color-line)">
-                  <div class="aspect-video overflow-hidden bg-(--color-surface-2)">
+                  <div class="aspect-square overflow-hidden bg-(--color-surface-2)">
                     {item.image ? (
                       <img
-                        class="h-full w-full object-cover object-top"
+                        class="h-full w-full object-cover"
                         src={encodeURI(`${base}${item.image}`)}
                         alt={item.name}
                         loading="lazy"
-                        width="640"
-                        height="360"
+                        width="480"
+                        height="480"
                       />
                     ) : (
                       <InitialsAvatar name={item.name} shape="block" class="h-full w-full text-3xl" />
