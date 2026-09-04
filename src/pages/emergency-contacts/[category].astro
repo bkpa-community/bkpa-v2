@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import InitialsAvatar from "../../components/InitialsAvatar.astro";
 import { getCollection, render } from "astro:content";
 import { EMERGENCY_CATEGORIES } from "../../lib/categories";
 import { breadcrumbSchema } from "../../lib/schema";
@@ -81,8 +80,6 @@ const pageSchema = breadcrumbSchema([
                 <h2 class="col-span-full mt-2 font-mono text-xs font-semibold tracking-wider text-(--color-ink-soft) uppercase first:mt-0">{group.name}</h2>
               )}
               {group.items.map((item) => (
-              <>
-                {null}
                 <div class="flex flex-col overflow-hidden rounded-lg border border-(--color-line)">
                   <div class="aspect-square overflow-hidden bg-(--color-surface-2)">
                     {item.image ? (
@@ -95,7 +92,10 @@ const pageSchema = breadcrumbSchema([
                         height="480"
                       />
                     ) : (
-                      <InitialsAvatar name={item.name} shape="block" class="h-full w-full text-3xl" />
+                      // No photo: a plain brand-colour block. The name is
+                      // already in the heading below, so this carries no
+                      // information and needs no text.
+                      <div class="h-full w-full bg-(--color-deep)"></div>
                     )}
                   </div>
                   <div class="min-w-0 p-5">
@@ -116,7 +116,6 @@ const pageSchema = breadcrumbSchema([
                     {item.notes && <p class="mt-2 text-xs text-(--color-ink-soft) italic">{item.notes}</p>}
                   </div>
                 </div>
-              </>
               ))}
             </>
           ))}
