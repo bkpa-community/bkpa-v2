@@ -32,7 +32,8 @@ items:
   group: ঢাকা
 - name: Dr. Ilangovan Veerappan (ইল্যাংগোভান ভেরাপ্পান)
   image: /images/doctors/dr-ilangovan-veerappan.webp
-  notes: এপয়েন্টমেন্ট নম্বর সঠিক সময়ে জানানো হবে
+  phone: '+880 1927-034840'
+  notes: কনসালটেশনের জন্য রাজীবের সাথে যোগাযোগ করুন।
   group: ঢাকা
 - name: ডাঃ ফাহমিদা বেগম
   image: /images/doctors/dr-fahmida-begum.webp
@@ -144,6 +145,7 @@ items:
   phone: '01787683333, 10602'
   group: ঢাকা
 - name: ডাঃ রেজওয়ানুর রহমান
+  rank: 4
   image: /images/doctors/dr-rezwanur-rahman.webp
   role: 'পপুলার ডায়াগনস্টিক & হাসপাতাল, ধানমন্ডি — চেম্বার: পপুলার কনসাল্টেশন সেন্টার-৩ (ভবন-৬), রুম ৩০৭, ধানমন্ডি, ঢাকা'
   notes: 'রোগী দেখার সময়: বিকেল ৪টা থেকে রাত ৮টা (শনিবার থেকে বৃহস্পতিবার)'
@@ -165,11 +167,13 @@ items:
   phone: '+880258616074, 029661213'
   group: ঢাকা
 - name: ডাঃ আবু সালেহ মোহাম্মদ
+  rank: 6
   image: /images/doctors/dr-abu-saleh-mohammad.webp
   role: বাংলাদেশ স্পেশালাইজড হাসপাতাল (BSH), শ্যামলী, মিরপুর রোড, ঢাকা
   phone: '10633, +8809666700100'
   group: ঢাকা
 - name: ডাঃ হারুন-উর-রশিদ
+  rank: 5
   image: /images/doctors/dr-harun-or-rashid.webp
   role: কিডনি ফাউন্ডেশন হাসপাতাল, মিরপুর, ঢাকা
   phone: '01623324850, +88-02-44807447, +88-02-44807448'
