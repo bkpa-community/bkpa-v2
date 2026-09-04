@@ -72,13 +72,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     </nav>
 
     <div class="flex items-center gap-2.5">
-      <button type="button" data-search-open class="inline-flex rounded-md border border-(--color-line) p-2 hover:bg-(--color-surface-2)" aria-label="Search">
-        <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <button type="button" data-search-open class="inline-flex items-center gap-2 rounded-md border border-(--color-line) px-3 py-2.5 hover:bg-(--color-surface-2) lg:px-2 lg:py-2" aria-label="Search">
+        <svg class="h-5 w-5 lg:h-4.5 lg:w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="11" cy="11" r="7"></circle>
           <path d="m21 21-4.3-4.3"></path>
         </svg>
+        <span class="text-sm font-semibold lg:hidden"><span class="i18n-bn bn">খুঁজুন</span><span class="i18n-en">Search</span></span>
       </button>
-      <div class="flex overflow-hidden rounded-full border border-(--color-line) font-mono text-xs font-semibold" role="group" aria-label="Language">
+      <div class="hidden overflow-hidden rounded-full border border-(--color-line) font-mono text-xs font-semibold lg:flex" role="group" aria-label="Language">
         <button type="button" data-lang-btn="bn" class="px-3 py-1.5 text-(--color-ink-soft) aria-pressed:bg-(--color-deep) aria-pressed:text-(--color-deep-ink)">বাংলা</button>
         <button type="button" data-lang-btn="en" class="px-3 py-1.5 text-(--color-ink-soft) aria-pressed:bg-(--color-deep) aria-pressed:text-(--color-deep-ink)">EN</button>
       </div>
@@ -95,6 +96,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   </div>
 
   <div id="mobile-nav" class="hidden border-t border-(--color-line) px-6 pb-4 [&.open]:block lg:!hidden">
+    <div class="flex justify-center py-3">
+      <div class="flex overflow-hidden rounded-full border border-(--color-line) font-mono text-xs font-semibold" role="group" aria-label="Language">
+        <button type="button" data-lang-btn="bn" class="px-5 py-2 text-(--color-ink-soft) aria-pressed:bg-(--color-deep) aria-pressed:text-(--color-deep-ink)">বাংলা</button>
+        <button type="button" data-lang-btn="en" class="px-5 py-2 text-(--color-ink-soft) aria-pressed:bg-(--color-deep) aria-pressed:text-(--color-deep-ink)">EN</button>
+      </div>
+    </div>
     <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href={`${base}/`}><span class="i18n-bn bn">হোম</span><span class="i18n-en">Home</span></a>
     <a class="block border-b border-(--color-line) py-2.5 text-sm font-semibold" href={`${base}/executive-body`}><span class="i18n-bn bn">কার্যনির্বাহী পরিষদ</span><span class="i18n-en">Executive Body</span></a>
     <p class="pt-3 text-eyebrow text-(--color-ink-soft)"><span class="i18n-bn bn">কিডনি সম্পর্কে জানুন</span><span class="i18n-en">Know Your Kidney</span></p>
